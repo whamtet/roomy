@@ -1,0 +1,94 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+h1 {
+    @apply text-5xl
+}
+
+h2 {
+    @apply text-3xl
+}
+
+h3 {
+    @apply text-xl
+}
+
+h4 {
+    @apply text-lg
+}
+
+body {
+    font-family: "ABeeZee", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.caret::after {
+    display: inline-block;
+    margin-left: 0.255em;
+    vertical-align: 0.255em;
+    content: "";
+    border-top: 0.3em solid;
+    border-right: 0.3em solid transparent;
+    border-bottom: 0;
+    border-left: 0.3em solid transparent;
+}
+
+.caret-up::after {
+    display: inline-block;
+    width: 0;
+    height: 0;
+    margin-left: 0.255em;
+    vertical-align: 0.255em;
+    content: "";
+    border-top: 0;
+    border-right: 0.3em solid transparent;
+    border-bottom: 0.3em solid;
+    border-left: 0.3em solid transparent;
+}
+
+.tab-list {
+    border-bottom: solid 3px #eee;
+}
+
+.tab-list a.selected {
+    background-color: #eee;
+}
+
+.tab-list a {
+    display: inline-block;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+}
+
+.weekday {
+    @apply bg-clj-blue text-white
+}
+
+.ms-btn {
+    background-color: #eeeeee;
+}
+
+textarea {
+    resize: none;
+}
+
+.editable-link:hover span {
+    transition-delay: 0.5s;
+    transition-property: visibility;
+    visibility: visible;
+}
+
+.fold {
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.5s;
+}
+div.fold-expanded {
+    max-height: 1000px; /* or any large value */
+}

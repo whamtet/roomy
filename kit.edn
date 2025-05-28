@@ -1,0 +1,8 @@
+{:full-name "mattpat/roomy"
+ :ns-name   "mattpat.roomy"
+ :sanitized "mattpat/roomy"
+ :name      "roomy"
+ :modules   {:root         "modules"
+             :repositories [{:url  "https://github.com/kit-clj/modules.git"
+                             :tag  "master"
+                             :name "kit-modules"}]}}
