@@ -73,12 +73,14 @@
   (read-string
    (slurp-resource resource)))
 
+(defn- split-line [^String s]
+  (-> s .trim (.split ",")))
 (defn slurp-csv [resource]
   (-> resource
       slurp-resource
       .trim
       (.split "\n")
-      (->> (map #(.split "," %)))))
+      (->> (map split-line))))
 
 (defn transform-in [m1 & transforms]
   (reduce
