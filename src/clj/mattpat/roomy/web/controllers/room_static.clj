@@ -76,6 +76,15 @@
                        :capacity (Long/parseLong capacity)
                        :tz tz}))))
 
+(def resources
+  (->> "static/resources.csv"
+       util/slurp-csv
+       (map (fn [[description min-quantity allow-instructions quantity-available]]
+              {:description description
+               :min-quantity (Long/parseLong min-quantity)
+               :allow-instructions (= "TRUE" allow-instructions)
+               :quantity-available (Long/parseLong quantity-available)}))))
+
 (def users [])
 
 (def id->room (util/key-by :id rooms))
@@ -95,14 +104,24 @@
 (def id->bookable
   (util/key-by :id (concat rooms users)))
 
-(defn room-id->services [room-id]
-  (->> room-id
-       id->room
-       :building-id
-       building-id->categories
-       (map (fn [category]
-              [category
-               (-> category :id category-id->resources)]))
+(def services ["Food Services"
+               "IT Requirements"
+               "Attendees"
+               "Presentation Materials"
+               "Video Conference"
+               "Setup Notes"
+               "Food Services"
+               "Special Services"])
+
+(util/defm room-id->services [_]
+  (->> services
+       shuffle
+       (take (rand-int 4))
+       (map (fn [service]
+              [{:description service}
+               (->> resources
+                    shuffle
+                    (take (inc (rand-int 2))))]))
        (into {})))
 
 (def all-buildings
