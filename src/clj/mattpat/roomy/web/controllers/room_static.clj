@@ -56,19 +56,13 @@
       (assoc :id (str "user" i))
       (util/assoc-f :q user->q)))
 
-(def directions ["North" "East" "South" "West" "SE"])
-(defn- adjust-building [building]
-  (if-let [x (and building (re-find #"\d" building))]
-    (->> x Long/parseLong (+ -2) directions (.replace building x))
-    building))
-
 (def rooms
   (->> "static/rooms.csv"
        util/slurp-csv
        (map-indexed (fn [i [description building floor setup setup-time teardown-time capacity tz]]
                       {:id (str i)
                        :description description
-                       :building (adjust-building building)
+                       :building building
                        :floor floor
                        :setup setup
                        :setup-time (Long/parseLong setup-time)

@@ -93,7 +93,7 @@
                       service-info t1 t2
                       title details
                       repeat-info]
-  (let [user "user1@moulispro.onmicrosoft.com"              ; TODO resolve
+  (let [user "matt@example.com"
         room-attendees (map id->room (keys service-info))
         recurrence (->patterned-recurrence week-start tz t1 repeat-info)]))
 
