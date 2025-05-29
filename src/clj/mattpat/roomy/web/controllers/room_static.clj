@@ -47,38 +47,6 @@
 
 (def category-id->resources {})
 
-(defn- ->minutes [x]
-  (if x (long (* x 60)) 0))
-(defn- clean-room [m]
-  (when (and (:active m)
-             (-> m :building :description banned-room? not)
-             (-> m :code (not= "WARNING; THIS IS NOT AN ACTUAL ROOM")))
-            (-> m
-                (util/transform-in
-                 [:id :id]
-                 [:description :description]
-                 [:setup :defaultSetupTypeId]
-                 [:building :building :description]
-                 [:building-id :building :id]
-                 [:floor :floor :description]
-                 [:capacity :defaultCapacity]
-                 [:setup-time :setupHours]
-                 [:teardown-time :teardownHours]
-                 [:floor-image :diagram :imageId]
-                 [:width :diagram :size :width]
-                 [:height :diagram :size :height]
-                 [:x :diagram :x]
-                 [:y :diagram :y]
-                 [:tz :building :id]
-                 [:mailbox :mailbox])
-                (update :id str)
-                (update :setup #(some-> % setup-types :description .trim))
-                (update :setup-time ->minutes)
-                (update :teardown-time ->minutes)
-                (update :tz building-id->tz-id)
-                (assoc :mailbox "room01@moulispro.onmicrosoft.com") ;; TODO - better static data
-                (util/assoc-f :q room->q))))
-
 (defn- clean-user [i m]
   (-> m
       (util/transform-in
@@ -88,7 +56,25 @@
       (assoc :id (str "user" i))
       (util/assoc-f :q user->q)))
 
-(def rooms [])
+(def directions ["North" "East" "South" "West" "SE"])
+(defn- adjust-office [office]
+  (if-let [x (re-find #"\d" office)]
+    (->> x Long/parseLong (+ -2) directions (.replace office x))
+    office))
+
+(def rooms
+  (->> "static/rooms.csv"
+       util/slurp-csv
+       (map-indexed (fn [i [description office floor setup setup-time teardown-time capacity tz]]
+                      {:id i
+                       :description description
+                       :office (adjust-office office)
+                       :floor floor
+                       :setup setup
+                       :setup-time (Long/parseLong setup-time)
+                       :teardown-time (Long/parseLong teardown-time)
+                       :capacity (Long/parseLong capacity)
+                       :tz tz}))))
 
 (def users [])
 

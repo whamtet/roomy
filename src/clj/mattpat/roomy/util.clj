@@ -73,6 +73,13 @@
   (read-string
    (slurp-resource resource)))
 
+(defn slurp-csv [resource]
+  (-> resource
+      slurp-resource
+      .trim
+      (.split "\n")
+      (->> (map #(.split "," %)))))
+
 (defn transform-in [m1 & transforms]
   (reduce
    (fn [m2 transform]

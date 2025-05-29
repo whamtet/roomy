@@ -35,21 +35,3 @@ Note that this alias runs nREPL during development. To run nREPL in production (
 Run `clj -M:dev:nrepl` or `make repl`.
 
 Note that, just like with [CIDER](#cider), this alias runs nREPL during development. To run nREPL in production (typically when the system starts), use the kit-nrepl library through the +nrepl profile as described in [the documentation](https://kit-clj.github.io/docs/profiles.html#profiles).
-
-## Viewing Alerts
-
-Add 
-
-```shell
-127.0.0.1 pocbox
-```
-
-to `/etc/hosts` then log in with
-
-```shell
-ssh -L 9093:localhost:9093 -L 9090:localhost:9090 poc@roomy.simpleui.io
-```
-
-## Azure EventHub Subscriptions
-
-notificationUrl/lifecycleNotificationUrl point to secrets held in a KeyVault. The Primary Connection Endpoint is stored as the secret and the 'secret' URL used as part of the rooms request.
