@@ -14,6 +14,8 @@
   (jt/plus a (jt/days b)))
 (defn +hour [a b]
   (jt/plus a (jt/hours b)))
+(defn +month [a b]
+  (jt/plus a (jt/months b)))
 
 (defn range-day [t]
   (iterate #(+day % 1) t))
