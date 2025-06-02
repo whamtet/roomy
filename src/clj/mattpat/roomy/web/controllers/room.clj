@@ -1,6 +1,5 @@
 (ns mattpat.roomy.web.controllers.room
   (:require
-    [clojure.tools.logging :as log]
     [mattpat.roomy.time :as time]
     [mattpat.roomy.util :as util]
     [mattpat.roomy.web.controllers.event :as event]
@@ -27,32 +26,65 @@
                 (select-keys [:setup-time :teardown-time]))}
    m))
 
-(defn get-bookings-db [db date-str tz locked? room-id]
+(defn- base-booking [date-str tz]
+  (let [minutes (* (rand-int (* 24 12)) 5)
+        duration (-> 30 rand-int (* 5) (+ 30))]
+    {:start (time/random-time date-str minutes tz)
+     :title (event/random-event)
+     :end (time/random-time date-str (+ minutes duration) tz)}))
+
+(defn- assoc-for-room [room-id {:keys [start end] :as m} attendees]
+  (let [{:keys [setup-time teardown-time]} (id->room room-id)]
+    (assoc m
+           :id room-id
+           :start-setup (time/-min start setup-time)
+           :setup? (pos? setup-time)
+           :end-teardown (time/+min end teardown-time)
+           :attendees attendees
+           :teardown? (pos? teardown-time))))
+(defn- assoc-for-attendee [{:keys [start end] :as m}]
+  (assoc m
+         :start-setup start
+         :end-teardown end))
+
+(defn- assoc-conj [m k v]
+  (update m k conj v))
+
+(defn- conj-single-booking [date-str tz]
+  (fn [m [room-id attendees]]
+    (let [base (base-booking date-str tz)
+          attendee-booking (assoc-for-attendee base)]
+      (as-> m m
+            (assoc-conj m room-id (assoc-for-room room-id base attendees))
+            (reduce
+             #(assoc-conj %1 %2 attendee-booking) m attendees)))))
+
+(defn- conj-random-booking [m date-str tz]
+  (reduce
+   (conj-single-booking date-str tz)
+   m
+   (room-static/random-allocation)))
+
+(defn- room-services-assocer [room-id]
+  (fn [{:keys [services start end] :as e}]
+    (if-let [{:keys [setup-time teardown-time] :as service-times} (get services room-id)]
+      (-> (merge e service-times)
+          (assoc :start-setup (time/-min start setup-time) :end-teardown (time/+min end teardown-time)))
+      e)))
+
+#_
+(defn get-bookings-db [_db date-str tz locked? room-id]
   (let [assoc-room-services (fn [{:keys [services start end] :as e}]
                               (if-let [{:keys [setup-time teardown-time] :as service-times} (get services room-id)]
                                 (-> (merge e service-times)
                                     (assoc :start-setup (time/-min start setup-time) :end-teardown (time/+min end teardown-time)))
                                 e))
-        {:keys [mailbox]} (id->room room-id)
         start-of-day (time/->zoned-date-time date-str tz)
         end-of-day (time/+day start-of-day 1)] #_
     (->> (calendar-view/view-for db mailbox start-of-day end-of-day)
          (map #(assoc % :id room-id))
          (map assoc-room-services)
          (map #(util/rename % :subject :title)))))
-
-(def repeat-schema
-  [:map
-   [:repeat-type [:enum "daily" "weekly" "monthly" "yearly"]]
-   [:interval :int] ;; long? interval means repeating every nth
-   [:limit-type [:or [:enum "forever" "date"] :int]]
-   [:end-date string?] ;; "MM/dd/yyyy", same as standard format.  ignored when limit-type = "forever"
-   [:days [:vector [:enum "Monday" "Tuesday" "Wednesday" "Thursday" "Friday" "Saturday" "Sunday"]]]
-   [:date-pattern [:enum "date" "week" "end-week"]]
-   ;; date means on fixed date, 7th, 14th etc.  date matches date of booking
-   ;; week means on the 1st, 2nd 3rd Wednesday of that month determined by initial booking date
-   ;; end-week means on he last Wednesday of that month
-   ])
 
 (defn- ->pattern [week-start
                   t1
@@ -87,6 +119,8 @@
         {:pattern (->pattern week-start t1 m)
          :range (->range tz t1 m)}))
 
+(def bookings (atom {}))
+
 (defn insert-booking [graph
                       event-bus
                       {:keys [tz week-start]}
@@ -97,23 +131,24 @@
         room-attendees (map id->room (keys service-info))
         recurrence (->patterned-recurrence week-start tz t1 repeat-info)]))
 
-(defn get-bookings
-  ([_ date-str tz locked? room-id] (get-bookings _ date-str tz locked? room-id 0))
-  ([_ date-str tz locked? room-id i] #_
+(defn get-bookings-db
+  ([_ date-str tz locked? room-id] (get-bookings-db _ date-str tz locked? room-id 0))
+  ([_ date-str tz locked? room-id i]
    (or
     (->> (get @bookings room-id)
          (filter (time/filter-day date-str tz locked?))
+         (map (room-services-assocer room-id))
          (sort-by :start)
-         not-empty)
+         not-empty) #_
     (do
       (assert (zero? i) (prn date-str tz locked? room-id))
       (swap! bookings conj-random-booking date-str tz)
       (recur _ date-str tz locked? room-id 1)))))
 
 (defn get-bookingss [date-str tz locked? companies]
-  (mapcat #(get-bookings nil date-str tz locked? %) companies))
+  (mapcat #(get-bookings-db nil date-str tz locked? %) companies))
 
-(defn- get-bookings-all [companies] #_
+(defn- get-bookings-all [companies]
   (mapcat @bookings companies))
 
 (defn booking-limits [locked? room-id start-date hour minute tz]
@@ -130,4 +165,4 @@
   (->> (dissoc locked? room-id)
        keys
        (get-bookingss start-date tz locked?)
-       (time/other-bookings start-date tz locked? (get-bookings nil start-date tz locked? room-id))))
+       (time/other-bookings start-date tz locked? (get-bookings-db nil start-date tz locked? room-id))))

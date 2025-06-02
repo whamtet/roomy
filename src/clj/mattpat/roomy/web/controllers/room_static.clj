@@ -1,51 +1,13 @@
 (ns mattpat.roomy.web.controllers.room-static
     (:require
-      [data.timezones :as timezones]
       [mattpat.roomy.util :as util]))
 
-(def building-id->tz-id
-  (util/collmap
-   [352] "Europe/Warsaw",
-   [21 22] "Asia/Tokyo",
-   [15 14 1767 1486] "Europe/Brussels",
-   [-10] "America/Boise",
-   [1669] "Europe/Bucharest",
-   [12] "Asia/Muscat",
-   [2 17 13 1485 1978] "Europe/London",
-   [6 7 2326] "US/Pacific",
-   [8] "America/Chicago",
-   [23 2250] "Asia/Calcutta",
-   [19] "Australia/Sydney",
-   [11] "Brazil/East",
-   [1 315 1620 1383 1417] "America/New_York",
-   [20 24 25 313] "Asia/Hong_Kong"))
-
-(def banned-room? #{"(all)" "(other)"})
-
-(defn- room->q [{:keys [description building floor]}]
+(defn- room->q [description building]
   (.toLowerCase
-    (str description " " building " " floor)))
+    (str description " " building)))
 (defn- user->q [{:keys [first-name last-name]}]
   (.toLowerCase
     (str first-name " " last-name)))
-
-(def setup-types {})
-
-(def building-id->categories {})
-
-(defn- clean-resource [m]
-  (when (:active m)
-        (-> m
-            (util/transform-in
-             [:resource-id :id]
-             [:category-id :categoryId]
-             [:description :description]
-             [:min-quantity :minQuantity]
-             [:allow-instructions :hideSpecialInstructions]
-             [:quantity-available :quantityAvailable])
-            (update :allow-instructions not))))
-
-(def category-id->resources {})
 
 (defn- clean-user [i m]
   (-> m
@@ -55,7 +17,6 @@
        [:src :picture :thumbnail])
       (assoc :id (str "user" i))
       (util/assoc-f :q user->q)))
-
 (def rooms
   (->> "static/rooms.csv"
        util/slurp-csv
@@ -63,12 +24,13 @@
                       {:id (str i)
                        :description description
                        :building building
-                       :floor floor
+                       :floor (Long/parseLong floor)
                        :setup setup
                        :setup-time (Long/parseLong setup-time)
                        :teardown-time (Long/parseLong teardown-time)
                        :capacity (Long/parseLong capacity)
-                       :tz tz}))))
+                       :tz tz
+                       :q (room->q description building)}))))
 
 (def resources
   (->> "static/resources.csv"
@@ -79,13 +41,17 @@
                :allow-instructions (= "TRUE" allow-instructions)
                :quantity-available (Long/parseLong quantity-available)}))))
 
-(def users [])
+(def users
+  (map-indexed clean-user
+               (util/slurp-edn "static/users.edn")))
 
 (def id->room (util/key-by :id rooms))
 (def id->user (util/key-by :id users))
 (def room-ids (keys id->room))
 
-(defn random-allocation []
+(defn random-allocation
+  "map of room-ids to list of user-ids"
+  []
   (let [user-ids (shuffle (map :id users))
         init-map (->> user-ids (map list) (zipmap room-ids))]
     (->> user-ids
@@ -177,7 +143,7 @@
   (->> (search-rooms** q building floor capacity setup)
        (concat (keep-locked locked?))
        distinct
-       (take 8)))
+       (take 6)))
 
 (defn get-locked [locked?]
   (->> locked?

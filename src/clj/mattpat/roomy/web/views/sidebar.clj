@@ -13,19 +13,6 @@
               {:href "/calendar/"
                :text "Calendar"
                :icon icons/calendar}
-              {:href "/confirm/"
-               :text "Review pending"
-               :icon icons/flag
-               :yellow? true}
-              {:href "/trash/"
-               :text "Trash"
-               :icon icons/trash}
-              {:href "/diagnostics/"
-               :text "Fix"
-               :icon icons/fix}
-              {:href "/builder/"
-               :text "UI Builder"
-               :icon icons/shop}
               {:href "/config/"
                :text "Settings"
                :icon icons/gears}

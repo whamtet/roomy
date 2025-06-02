@@ -13,8 +13,8 @@
       [mattpat.roomy.web.views.room-search.services :as services]
       [simpleui.core :as simpleui]))
 
-(def col-width 110)
-(def col-width-style "110px")
+(def col-width 120)
+(def col-width-style "120px")
 
 (defn- primary-string [hour tz tf?]
   (if tf?
@@ -89,7 +89,7 @@
            :hx-include ".lock-info"}
     icons/plus-circle]))
 
-[:div {:class "w-[90px] text-gray-500 text-gray-700"}]
+[:div {:class "w-[95px] text-gray-500 text-gray-700"}]
 (defcomponent headers [req start-date results]
   [:div.flex.items-center
    [:div {:class "text-gray-500"
@@ -234,29 +234,26 @@ bg-slate-50"}]
                 :selected (= building q-building)} building])
     buildings)])
 
+(def floor-disp ["1st Floor"
+                 "2nd Floor"
+                 "3rd Floor"
+                 "4th Floor"
+                 "5th Floor"])
+
 [:div.w-8.h-8]
 (defn- floor-filter [q-floor floors]
-  (let [floor-image (some #(when (-> % :floor (= q-floor))
-                            (:floor-image %)) floors)]
-    [:span#floor-filter.flex.items-stretch
-     [:select {:class (if floors "room-search2 border rounded-md" "hidden")
-               :name "q-floor"
-               :hx-get "room-search"
-               :hx-target "#room-book"
-               :hx-include ".room-search"}
-      [:option {:value ""} "Filter floor..."]
-      (map
-       (fn [{:keys [floor]}]
-         [:option {:value floor
-                   :selected (= floor q-floor)} floor])
-       floors)]
-     (when floor-image
-           [:div {:class "cursor-pointer ml-3 mt-1 flex items-stretch"
-                   :hx-get "floor-modal"
-                   :hx-target "#modal"
-                   :hx-vals {:floor-image floor-image}
-                  :title "Floor map"}
-            (icons/buildings-width 8)])]))
+  [:span#floor-filter.flex.items-stretch
+   [:select {:class (if floors "room-search2 border rounded-md" "hidden")
+             :name "q-floor"
+             :hx-get "room-search"
+             :hx-target "#room-book"
+             :hx-include ".room-search"}
+    [:option {:value ""} "Filter floor..."]
+    (map
+     (fn [{:keys [floor]}]
+       [:option {:value floor
+                 :selected (= floor q-floor)} (floor-disp floor)])
+     floors)]])
 
 (defn- setup-filter [q-setup setups]
    [:select#setup-filter
@@ -312,7 +309,7 @@ bg-slate-50"}]
 (defcomponent ^:endpoint room-search [req
                                       ^:trim q
                                       ^:trim q-building
-                                      ^:trim q-floor
+                                      ^:long q-floor
                                       ^:trim q-setup
                                       start-date
                                       ^:long-option capacity

@@ -1,223 +1,300 @@
-Apple,Beijing Office,22nd Floor,Conference Style,15,0,10,Asia/Hong_Kong
-Boardroom,Beijing Office,22nd Floor,Conference Style,15,0,18,Asia/Hong_Kong
-Intercede,Beijing Office,22nd Floor,Conference Style,15,0,5,Asia/Hong_Kong
-Intercession 2,Beijing Office,22nd Floor,Conference Style,15,0,4,Asia/Hong_Kong
-Orchard,Beijing Office,22nd Floor,Conference Style,15,0,10,Asia/Hong_Kong
-Panda,Beijing Office,22nd Floor,Conference Style,15,0,8,Asia/Hong_Kong
-Pouha,Beijing Office,22nd Floor,Conference Style,15,0,8,Asia/Hong_Kong
-Avocado,Belfast Office,1st Floor,Standard Office,15,0,8,Europe/London
-Boardroom,Belfast Office,1st Floor,Standard Office,15,0,12,Europe/London
-Bridford,Belfast Office,1st Floor,Standard Office,15,0,5,Europe/London
-Chinfort,Belfast Office,1st Floor,Conference Style,15,0,8,Europe/London
-Creek,Belfast Office,1st Floor,Conference Style,15,0,10,Europe/London
-Facilities,Belfast Office,1st Floor,Conference Style,0,0,1,Europe/London
-Applik,Chicago Office,11th Floor,Conference Style,0,0,7,America/Chicago
-Black Hole,Chicago Office,11th Floor,Conference Style,0,0,10,America/Chicago
-Cafe,Chicago Office,11th Floor,Conference Style,0,0,80,America/Chicago
-Circum,Chicago Office,11th Floor,Conference Style,0,0,10,America/Chicago
-Discovery,Chicago Office,11th Floor,Conference Style,15,0,15,America/Chicago
-Enterprise,Chicago Office,11th Floor,Conference Style,15,0,9,America/Chicago
-Facilities,Chicago Office,11th Floor,Conference Style,0,0,1,America/Chicago
-Neutron Star,Chicago Office,11th Floor,Conference Style,0,0,10,America/Chicago
-Nova,Chicago Office,11th Floor,Conference Style,0,0,13,America/Chicago
-Room 7201,Chicago Office,11th Floor,Conference Style,15,0,15,America/Chicago
-Stellar,Chicago Office,11th Floor,Conference Style,0,0,10,America/Chicago
-Strike,Chicago Office,11th Floor,Conference Style,0,0,10,America/Chicago
-Collins,Dubai Office,6th Floor,Conference Style,15,0,8,Asia/Muscat
-Khalifa,Dubai Office,6th Floor,Conference Style,15,0,8,Asia/Muscat
-Alamagne,Frankfurt Office,18th Floor,Conference Style,15,0,8,Europe/Warsaw
-Frippant,Frankfurt Office,18th Floor,Conference Style,15,0,8,Europe/Warsaw
-Gurtle,Frankfurt Office,18th Floor,Conference Style,15,0,14,Europe/Warsaw
-Intercede 1,Frankfurt Office,18th Floor,Conference Style,15,0,4,Europe/Warsaw
-Intercede 2,Frankfurt Office,18th Floor,Conference Style,15,0,4,Europe/Warsaw
-Mozard,Frankfurt Office,18th Floor,Conference Style,15,0,8,Europe/Warsaw
-Stipel,Frankfurt Office,18th Floor,Conference Style,15,0,8,Europe/Warsaw
-Arlington,Guildford Office,6th Floor,Conference Style,15,0,4,Europe/London
-Boardroom,Guildford Office,6th Floor,Conference Style,15,0,20,Europe/London
-Capail,Guildford Office,6th Floor,Conference Style,15,0,8,Europe/London
-Chamberlain,Guildford Office,5th Floor,Conference Style,15,0,6,Europe/London
-Chimes,Guildford Office,6th Floor,Conference Style,15,0,8,Europe/London
-Chippdale,Guildford Office,6th Floor,Conference Style,15,0,8,Europe/London
-Circus,Guildford Office,5th Floor,Conference Style,15,0,4,Europe/London
-Clifford,Guildford Office,5th Floor,Conference Style,15,0,12,Europe/London
-Custard 07A,Guildford Office,7th Floor,Conference Style,0,0,4,Europe/London
-Custard 07B,Guildford Office,7th Floor,Conference Style,0,0,10,Europe/London
-Custard 07C,Guildford Office,7th Floor,Conference Style,0,0,4,Europe/London
-Custard 07D,Guildford Office,7th Floor,Conference Style,0,0,4,Europe/London
-Custard 07E,Guildford Office,7th Floor,Conference Style,0,0,10,Europe/London
-Custard 07F,Guildford Office,7th Floor,Conference Style,0,0,4,Europe/London
-Flipper,Guildford Office,6th Floor,Conference Style,15,0,4,Europe/London
-Hillard,Guildford Office,5th Floor,Conference Style,15,0,7,Europe/London
-Hipple,Guildford Office,6th Floor,Conference Style,15,0,4,Europe/London
-John Luke,Guildford Office,6th Floor,Conference Style,15,0,8,Europe/London
-Lon Terrace,Guildford Office,6th Floor,Conference Style,0,0,150,Europe/London
-Nashville,Guildford Office,6th Floor,Conference Style,15,0,4,Europe/London
-Patland,Guildford Office,5th Floor,Conference Style,15,0,8,Europe/London
-Regency,Guildford Office,5th Floor,Conference Style,15,0,12,Europe/London
-Restaurant Dining Room,Guildford Office,6th Floor,Conference Style,0,0,16,Europe/London
-Soldier,Guildford Office,5th Floor,Conference Style,15,0,6,Europe/London
-Sounds,Guildford Office,5th Floor,Conference Style,15,0,4,Europe/London
-Trappel 01,Guildford Office,5th Floor,Conference Style,0,0,6,Europe/London
-Trappel 02,Guildford Office,5th Floor,Conference Style,0,0,6,Europe/London
-Trappel 03,Guildford Office,5th Floor,Conference Style,0,0,6,Europe/London
-C-Suite,Hong Kong Office,56th Floor,Conference Style,15,0,24,Asia/Hong_Kong
-Drenshford,Hong Kong Office,57th Floor,Conference Style,15,0,4,Asia/Hong_Kong
-Elektron,Hong Kong Office,56th Floor,Conference Style,15,0,7,Asia/Hong_Kong
-Futures Room,Hong Kong Office,56th Floor,Conference Style,15,0,6,Asia/Hong_Kong
-Gold Room,Hong Kong Office,56th Floor,Conference Style,15,0,16,Asia/Hong_Kong
-Jenford Room,Hong Kong Office,57th Floor,Conference Style,15,0,6,Asia/Hong_Kong
-ML Office,Hong Kong Office,56th Floor,Conference Style,15,0,-1,Asia/Hong_Kong
-Platinum Room,Hong Kong Office,56th Floor,Conference Style,15,0,6,Asia/Hong_Kong
-Pounamu Room,Hong Kong Office,56th Floor,Conference Style,15,0,8,Asia/Hong_Kong
-Rails Room,Hong Kong Office,57th Floor,Conference Style,15,0,10,Asia/Hong_Kong
-Collaboration Room,London Office 7,3rd Floor,Conference Style,0,0,-1,Europe/London
-Room 03A,London Office 7,3rd Floor,Conference Style,0,0,-1,Europe/London
-Room 03B,London Office 7,3rd Floor,Conference Style,0,0,-1,Europe/London
-Room 03C,London Office 7,3rd Floor,Conference Style,0,0,-1,Europe/London
-Room 03D,London Office 7,3rd Floor,Conference Style,0,0,-1,Europe/London
-Hermione,Los Angeles Office,10th Floor,Conference Style,0,0,6,US/Pacific
-Tripple Beach,Los Angeles Office,10th Floor,Conference Style,0,0,8,US/Pacific
-Asteroid,Mumbai Office,2nd Floor,Conference Style,15,0,6,Asia/Calcutta
-Boardroom,Mumbai Office,2nd Floor,Conference Style,15,0,18,Asia/Calcutta
-Chai,Mumbai Office,2nd Floor,Conference Style,0,0,3,Asia/Calcutta
-Elon,Mumbai Office,2nd Floor,Conference Style,15,0,8,Asia/Calcutta
-Musk,Mumbai Office,2nd Floor,Conference Style,15,0,10,Asia/Calcutta
-Oragano,Mumbai Office,2nd Floor,Conference Style,0,0,4,Asia/Calcutta
-Rose,Mumbai Office,2nd Floor,Conference Style,0,0,4,Asia/Calcutta
-Rose,Mumbai Office,2nd Floor,Conference Style,15,0,12,Asia/Calcutta
-Tulip,Mumbai Office,2nd Floor,Conference Style,15,0,8,Asia/Calcutta
-C-Suite,New York Office 3,23rd Floor,Conference Style,0,0,-1,America/New_York
-Room 2201,New York Office 3,22nd Floor,Conference Style,15,0,75,America/New_York
-Room 2202,New York Office 3,22nd Floor,Conference Style,0,0,1,America/New_York
-Room 2203,New York Office 3,22nd Floor,Conference Style,0,0,10,America/New_York
-Room 2204,New York Office 3,22nd Floor,Conference Style,0,0,8,America/New_York
-Room 2205,New York Office 3,22nd Floor,Conference Style,0,0,10,America/New_York
-Room 2206,New York Office 3,22nd Floor,Conference Style,0,0,10,America/New_York
-Room 2207,New York Office 3,22nd Floor,Conference Style,0,0,8,America/New_York
-Room 2208,New York Office 3,22nd Floor,Conference Style,0,0,12,America/New_York
-Room 2209,New York Office 3,22nd Floor,Conference Style,0,0,14,America/New_York
-Room 2210,New York Office 3,22nd Floor,Conference Style,0,0,5,America/New_York
-Room 2211,New York Office 3,22nd Floor,Conference Style,0,0,8,America/New_York
-Room 2212,New York Office 3,22nd Floor,Conference Style,0,0,-1,America/New_York
-Room 2213,New York Office 3,22nd Floor,Conference Style,0,0,8,America/New_York
-Room 2214,New York Office 3,22nd Floor,Conference Style,0,0,-1,America/New_York
-Room 2215,New York Office 3,22nd Floor,Conference Style,0,0,10,America/New_York
-Room 2216,New York Office 3,22nd Floor,Conference Style,0,0,8,America/New_York
-Room 2217,New York Office 3,22nd Floor,Conference Style,0,0,7,America/New_York
-Room 2218,New York Office 3,22nd Floor,Conference Style,0,0,7,America/New_York
-Room 2219,New York Office 3,22nd Floor,Conference Style,0,0,8,America/New_York
-Room 2220,New York Office 3,22nd Floor,Conference Style,0,0,8,America/New_York
-Room 2221,New York Office 3,22nd Floor,Conference Style,0,0,6,America/New_York
-Room 2222,New York Office 3,22nd Floor,Conference Style,0,0,8,America/New_York
-Room 2301,New York Office 3,23rd Floor,Conference Style,0,0,6,America/New_York
-Room 2302,New York Office 3,23rd Floor,Conference Style,0,0,8,America/New_York
-Room 2303,New York Office 3,23rd Floor,Conference Style,15,0,18,America/New_York
-Room 2304,New York Office 3,23rd Floor,Conference Style,0,0,7,America/New_York
-Room 2305,New York Office 3,23rd Floor,Conference Style,0,0,10,America/New_York
-Room 2306,New York Office 3,23rd Floor,Conference Style,0,0,1,America/New_York
-Room 2307,New York Office 3,23rd Floor,Conference Style,0,0,7,America/New_York
-Room 2308,New York Office 3,23rd Floor,Conference Style,0,0,1,America/New_York
-Room 2309,New York Office 3,23rd Floor,Conference Style,0,0,7,America/New_York
-Room 2310,New York Office 3,23rd Floor,Conference Style,0,0,10,America/New_York
-Room 2311,New York Office 3,23rd Floor,Conference Style,0,0,1,America/New_York
-Room 2312,New York Office 3,23rd Floor,Conference Style,0,0,7,America/New_York
-Room 2313,New York Office 3,23rd Floor,Conference Style,0,0,1,America/New_York
-Room 2314,New York Office 3,23rd Floor,Conference Style,0,0,7,America/New_York
-Room 2315,New York Office 3,23rd Floor,Conference Style,0,0,4,America/New_York
-Room 2316,New York Office 3,23rd Floor,Conference Style,0,0,8,America/New_York
-Room 2317,New York Office 3,23rd Floor,Conference Style,0,0,10,America/New_York
-Room 2318,New York Office 3,23rd Floor,Conference Style,0,0,7,America/New_York
-Room 2319,New York Office 3,23rd Floor,Conference Style,0,0,7,America/New_York
-Room 2320,New York Office 3,23rd Floor,Conference Style,0,0,0,America/New_York
-Room 2321,New York Office 3,23rd Floor,Conference Style,15,0,12,America/New_York
-Room 2322,New York Office 3,23rd Floor,Conference Style,15,0,6,America/New_York
-Room 2323,New York Office 3,23rd Floor,Conference Style,15,0,4,America/New_York
-Room 2324,New York Office 3,23rd Floor,Conference Style,15,0,4,America/New_York
-Room 2325,New York Office 3,23rd Floor,Conference Style,15,0,18,America/New_York
-Room 2326,New York Office 3,23rd Floor,Conference Style,0,0,20,America/New_York
-Room 2327,New York Office 3,23rd Floor,Conference Style,15,0,19,America/New_York
-Room 2328,New York Office 3,23rd Floor,Conference Style,15,0,19,America/New_York
-Room 2329,New York Office 3,23rd Floor,Conference Style,15,0,24,America/New_York
-Room 2330,New York Office 3,23rd Floor,Conference Style,15,0,36,America/New_York
-Room 2331,New York Office 3,23rd Floor,Conference Style,15,0,60,America/New_York
-Room 2332,New York Office 3,23rd Floor,Conference Style,30,30,90,America/New_York
-Room 2333,New York Office 3,23rd Floor,Conference Style,0,0,129,America/New_York
-Room 2334,New York Office 3,23rd Floor,Conference Style,15,0,33,America/New_York
-Room 2335,New York Office 3,23rd Floor,Conference Style,15,0,13,America/New_York
-Room 2336,New York Office 3,23rd Floor,Conference Style,15,0,25,America/New_York
-Room 2337,New York Office 3,23rd Floor,Conference Style,15,0,7,America/New_York
-Room 2338,New York Office 3,23rd Floor,Conference Style,15,0,7,America/New_York
-Room 2339,New York Office 3,23rd Floor,Conference Style,15,0,6,America/New_York
-Room 2340,New York Office 3,23rd Floor,Conference Style,15,0,12,America/New_York
-Room 2341,New York Office 3,23rd Floor,Conference Style,15,0,4,America/New_York
-Room 2342,New York Office 3,23rd Floor,Conference Style,15,0,11,America/New_York
-Room 2343,New York Office 3,23rd Floor,Conference Style,15,0,7,America/New_York
-Room 2344,New York Office 3,23rd Floor,Conference Style,15,0,7,America/New_York
-Room 2345,New York Office 3,23rd Floor,Conference Style,0,0,13,America/New_York
-Room 2346,New York Office 3,23rd Floor,Conference Style,0,0,17,America/New_York
-Room 2347,New York Office 3,23rd Floor,Conference Style,30,30,30,America/New_York
-Room 2348,New York Office 3,23rd Floor,Conference Style,30,30,200,America/New_York
-Room 2349,New York Office 3,23rd Floor,Conference Style,0,0,230,America/New_York
-Chappet,Paris Office,3rd Floor,Conference Style,15,0,10,Europe/Brussels
-Clarette,Paris Office,3rd Floor,Conference Style,15,0,8,Europe/Brussels
-La Platt,Paris Office,3rd Floor,Conference Style,15,0,12,Europe/Brussels
-Pompo,Paris Office,3rd Floor,Conference Style,15,0,8,Europe/Brussels
-Valet Bou,Paris Office,3rd Floor,Conference Style,15,0,6,Europe/Brussels
-Ames,San Francisco Office,50th Floor,Conference Style,15,0,7,US/Pacific
-AUSA Office,San Francisco Office,51st Floor,Conference Style,0,0,4,US/Pacific
-Cypress,San Francisco Office,51st Floor,Conference Style,15,0,25,US/Pacific
-Dallas,San Francisco Office,51st Floor,Conference Style,15,0,4,US/Pacific
-Denver,San Francisco Office,51st Floor,Conference Style,15,0,4,US/Pacific
-Denver (2),San Francisco Office,51st Floor,Conference Style,15,0,6,US/Pacific
-Enzon,San Francisco Office,50th Floor,Conference Style,15,0,10,US/Pacific
-Fremont,San Francisco Office,51st Floor,Conference Style,15,0,29,US/Pacific
-Pittsburgh,San Francisco Office,50th Floor,Conference Style,15,0,4,US/Pacific
-Roach,San Francisco Office,50th Floor,Conference Style,15,0,25,US/Pacific
-Seattle,San Francisco Office,51st Floor,Conference Style,15,0,6,US/Pacific
-Shortston,San Francisco Office,51st Floor,Conference Style,15,0,7,US/Pacific
-Sioux Warrior,San Francisco Office,51st Floor,Conference Style,15,0,7,US/Pacific
-Slavemont,San Francisco Office,50th Floor,Conference Style,15,0,7,US/Pacific
-Stormster,San Francisco Office,52nd Floor,Conference Style,15,0,7,US/Pacific
-TNT Office,San Francisco Office,51st Floor,Conference Style,0,0,4,US/Pacific
-Altitude,Seoul Office,36th floor,Conference Style,15,0,5,Asia/Tokyo
-Blackwood,Seoul Office,36th floor,Conference Style,0,0,5,Asia/Tokyo
-Board,Seoul Office,36th floor,Conference Style,15,0,22,Asia/Tokyo
-Cassandra,Seoul Office,36th floor,Conference Style,15,0,10,Asia/Tokyo
-Chepal,Seoul Office,36th floor,Conference Style,15,0,10,Asia/Tokyo
-Facilities,Seoul Office,(none),Conference Style,0,0,1,Asia/Tokyo
-Peanuts,Seoul Office,36th floor,Conference Style,0,0,3,Asia/Tokyo
-Rimford,Seoul Office,36th floor,Conference Style,0,0,3,Asia/Tokyo
-Willow,Seoul Office,36th floor,Conference Style,0,0,5,Asia/Tokyo
-Beech,Shanghai Office,43rd Floor,Conference Style,15,0,14,Asia/Hong_Kong
-Carambo,Shanghai Office,42nd Floor,Conference Style,15,0,10,Asia/Hong_Kong
-Conifer,Shanghai Office,43rd Floor,Conference Style,15,0,18,Asia/Hong_Kong
-Facilities,Shanghai Office,43rd Floor,Conference Style,0,0,1,Asia/Hong_Kong
-Facilities,Shanghai Office,43rd Floor,Conference Style,0,0,1,Asia/Hong_Kong
-Himphord,Shanghai Office,42nd Floor,Conference Style,15,0,2,Asia/Hong_Kong
-Moon,Shanghai Office,43rd Floor,Conference Style,15,0,6,Asia/Hong_Kong
-Satou,Shanghai Office,43rd Floor,Conference Style,15,0,6,Asia/Hong_Kong
-Boardroom,Singapore Office,33rd Floor,Conference Style,15,0,16,Asia/Hong_Kong
-Facilities,Singapore Office,(none),Conference Style,0,0,1,Asia/Hong_Kong
-Lion,Singapore Office,33rd Floor,Conference Style,15,0,6,Asia/Hong_Kong
-Raffle,Singapore Office,33rd Floor,Conference Style,15,0,10,Asia/Hong_Kong
-Sensible,Singapore Office,33rd Floor,Conference Style,15,0,12,Asia/Hong_Kong
-Tightrope,Singapore Office,33rd Floor,Conference Style,15,0,6,Asia/Hong_Kong
-Appel,Sydney Office,39th floor,Conference Style,15,0,8,Australia/Sydney
-Blondette,Sydney Office,39th floor,Conference Style,0,0,8,Australia/Sydney
-Boardroom,Sydney Office,39th floor,Conference Style,15,0,14,Australia/Sydney
-Femette,Sydney Office,39th floor,Conference Style,0,0,6,Australia/Sydney
-Hiltford,Sydney Office,39th floor,Conference Style,15,0,10,Australia/Sydney
-Key,Sydney Office,39th floor,Conference Style,15,0,4,Australia/Sydney
-Kokikoko,Sydney Office,39th floor,Conference Style,0,0,4,Australia/Sydney
-Ripford,Sydney Office,39th floor,Conference Style,15,0,9,Australia/Sydney
-Saltwater,Sydney Office,39th floor,Conference Style,0,0,4,Australia/Sydney
-Staff Lounge,Sydney Office,39th floor,Conference Style,15,0,50,Australia/Sydney
-Terrain,Sydney Office,39th floor,Conference Style,15,0,6,Australia/Sydney
-Boardroom,Tokyo Office,11th Floor,Conference Style,15,0,16,Asia/Tokyo
-Eagle,Tokyo Office,11th Floor,Conference Style,15,0,10,Asia/Tokyo
-Fiji,Tokyo Office,11th Floor,Conference Style,15,0,6,Asia/Tokyo
-Maple,Tokyo Office,11th Floor,Conference Style,15,0,6,Asia/Tokyo
-Pearl Harbor,Tokyo Office,11th Floor,Conference Style,15,0,6,Asia/Tokyo
-River,Tokyo Office,11th Floor,Conference Style,15,0,8,Asia/Tokyo
-Snake,Tokyo Office,11th Floor,Conference Style,15,0,10,Asia/Tokyo
-Tree,Tokyo Office,11th Floor,Conference Style,15,0,16,Asia/Tokyo
+Room B101,Beijing Office,0,Conference Style,15,0,10,Asia/Hong_Kong
+Room B102,Beijing Office,0,Conference Style,15,0,18,Asia/Hong_Kong
+Room B103,Beijing Office,0,Conference Style,15,0,10,Asia/Hong_Kong
+Room B104,Beijing Office,0,Conference Style,15,0,8,Asia/Hong_Kong
+Room B105,Beijing Office,0,Conference Style,15,0,5,Asia/Hong_Kong
+Room B106,Beijing Office,0,Conference Style,15,0,8,Asia/Hong_Kong
+Room B107,Beijing Office,0,Conference Style,15,0,4,Asia/Hong_Kong
+Room B201,Beijing Office,1,Standard Office,0,0,1,Asia/Hong_Kong
+Room B202,Beijing Office,1,Standard Office,0,0,1,Asia/Hong_Kong
+Room D101,Dubai Office,0,Conference Style,15,0,8,Asia/Muscat
+Room D102,Dubai Office,0,Conference Style,15,0,8,Asia/Muscat
+Room D103,Dubai Office,0,Standard Office,15,0,2,Asia/Muscat
+Room D201,Dubai Office,1,Standard Office,0,0,1,Asia/Muscat
+Room D202,Dubai Office,1,Standard Office,0,0,1,Asia/Muscat
+Room D101,Dublin Office,0,Conference Style,15,0,10,Europe/London
+Room D102,Dublin Office,0,Conference Style,15,0,8,Europe/London
+Room D103,Dublin Office,0,Conference Style,15,0,8,Europe/London
+Room D104,Dublin Office,0,Conference Style,15,0,5,Europe/London
+Room D105,Dublin Office,0,Conference Style,15,0,12,Europe/London
+Room D201,Dublin Office,1,Standard Office,0,0,1,Europe/London
+Room D202,Dublin Office,1,Standard Office,0,0,1,Europe/London
+Room F101,Frankfurt Office,0,Conference Style,15,0,8,Europe/Warsaw
+Room F102,Frankfurt Office,0,Conference Style,15,0,8,Europe/Warsaw
+Room F103,Frankfurt Office,0,Conference Style,15,0,8,Europe/Warsaw
+Room F104,Frankfurt Office,0,Conference Style,15,0,8,Europe/Warsaw
+Room F105,Frankfurt Office,0,Conference Style,15,0,14,Europe/Warsaw
+Room F106,Frankfurt Office,0,Conference Style,15,0,4,Europe/Warsaw
+Room F107,Frankfurt Office,0,Conference Style,15,0,4,Europe/Warsaw
+Room F108,Frankfurt Office,0,Standard Office,0,0,1,Europe/Warsaw
+Room F201,Frankfurt Office,1,Standard Office,0,0,1,Europe/Warsaw
+Room G101,Gurugram Office,0,(none),15,0,-1,Asia/Calcutta
+Room G102,Gurugram Office,0,(none),15,0,-1,Asia/Calcutta
+Room G103,Gurugram Office,0,(none),15,0,-1,Asia/Calcutta
+Room G104,Gurugram Office,0,(none),15,0,-1,Asia/Calcutta
+Room G105,Gurugram Office,0,(none),15,0,-1,Asia/Calcutta
+Room HK101,Hong Kong Office,0,Conference Style,15,0,6,Asia/Hong_Kong
+Room HK102,Hong Kong Office,0,Conference Style,15,0,6,Asia/Hong_Kong
+Room HK103,Hong Kong Office,0,Conference Style,15,0,24,Asia/Hong_Kong
+Room HK104,Hong Kong Office,0,Conference Style,15,0,16,Asia/Hong_Kong
+Room HK105,Hong Kong Office,0,Conference Style,15,0,8,Asia/Hong_Kong
+Room HK106,Hong Kong Office,0,Conference Style,15,0,7,Asia/Hong_Kong
+Room HK107,Hong Kong Office,0,(none),15,0,-1,Asia/Hong_Kong
+Room HK201,Hong Kong Office,1,Conference Style,15,0,10,Asia/Hong_Kong
+Room HK202,Hong Kong Office,1,Conference Style,15,0,6,Asia/Hong_Kong
+Room HK203,Hong Kong Office,1,Conference Style,15,0,4,Asia/Hong_Kong
+Room HK301,Hong Kong Office,2,Standard Office,0,0,1,Asia/Hong_Kong
+Room HK302,Hong Kong Office,2,Standard Office,0,0,1,Asia/Hong_Kong
+Room H101,Houston Office,0,Conference Style,0,0,10,America/Chicago
+Room H102,Houston Office,0,Conference Style,0,0,10,America/Chicago
+Room H103,Houston Office,0,Conference Style,0,0,13,America/Chicago
+Room H104,Houston Office,0,Conference Style,0,0,10,America/Chicago
+Room H105,Houston Office,0,Conference Style,0,0,9,America/Chicago
+Room H106,Houston Office,0,(none),0,0,1,America/Chicago
+Room H201,Houston Office,1,Conference Style,15,0,9,America/Chicago
+Room H202,Houston Office,1,Conference Style,15,0,15,America/Chicago
+Room H203,Houston Office,1,Conference Style,15,0,15,America/Chicago
+Room H204,Houston Office,1,Conference Style,15,0,9,America/Chicago
+Room H205,Houston Office,1,Conference Style,0,0,10,America/Chicago
+Room H206,Houston Office,1,Conference Style,0,0,10,America/Chicago
+Room H207,Houston Office,1,Conference Style,0,0,80,America/Chicago
+Room H208,Houston Office,1,Conference Style,0,0,7,America/Chicago
+Room H209,Houston Office,1,(none),0,0,1,America/Chicago
+Room H301,Houston Office,2,Standard Office,0,0,1,America/Chicago
+Room H302,Houston Office,2,Standard Office,0,0,1,America/Chicago
+Room L101,London Office (3),0,(none),0,0,0,Europe/London
+Room L201,London Office (3),1,Conference Style,0,0,16,Europe/London
+Room L202,London Office (3),1,Conference Style,0,0,150,Europe/London
+Room L203,London Office (3),1,Conference Style,15,0,20,Europe/London
+Room L204,London Office (3),1,Conference Style,15,0,4,Europe/London
+Room L205,London Office (3),1,Conference Style,15,0,8,Europe/London
+Room L206,London Office (3),1,Conference Style,15,0,4,Europe/London
+Room L207,London Office (3),1,Conference Style,15,0,8,Europe/London
+Room L208,London Office (3),1,Conference Style,15,0,8,Europe/London
+Room L209,London Office (3),1,Conference Style,15,0,4,Europe/London
+Room L2010,London Office (3),1,Conference Style,15,0,8,Europe/London
+Room L2011,London Office (3),1,Conference Style,15,0,4,Europe/London
+Room L301,London Office (3),2,Conference Style,15,0,12,Europe/London
+Room L302,London Office (3),2,Conference Style,15,0,6,Europe/London
+Room L303,London Office (3),2,Conference Style,15,0,4,Europe/London
+Room L304,London Office (3),2,Conference Style,15,0,4,Europe/London
+Room L305,London Office (3),2,Conference Style,15,0,8,Europe/London
+Room L306,London Office (3),2,Conference Style,15,0,12,Europe/London
+Room L307,London Office (3),2,Conference Style,15,0,7,Europe/London
+Room L308,London Office (3),2,Conference Style,0,0,6,Europe/London
+Room L309,London Office (3),2,Conference Style,0,0,6,Europe/London
+Room L3010,London Office (3),2,Conference Style,0,0,6,Europe/London
+Room L3011,London Office (3),2,Conference Style,0,0,4,Europe/London
+Room L3012,London Office (3),2,Conference Style,15,0,6,Europe/London
+Room L3013,London Office (3),2,Conference Style,0,0,1,Europe/London
+Room L401,London Office (3),3,Conference Style,0,0,4,Europe/London
+Room L402,London Office (3),3,Conference Style,0,0,10,Europe/London
+Room L403,London Office (3),3,Conference Style,0,0,4,Europe/London
+Room L501,London Office (3),4,Conference Style,0,0,4,Europe/London
+Room L502,London Office (3),4,Conference Style,0,0,10,Europe/London
+Room L503,London Office (3),4,Conference Style,0,0,4,Europe/London
+Room L601,London Office (3),5,Standard Office,0,0,1,Europe/London
+Room L602,London Office (3),5,Standard Office,0,0,1,Europe/London
+Room L101,London Office (5),0,(none),0,0,-1,Europe/London
+Room L102,London Office (5),0,(none),0,0,-1,Europe/London
+Room L103,London Office (5),0,(none),0,0,-1,Europe/London
+Room L104,London Office (5),0,(none),0,0,-1,Europe/London
+Room L105,London Office (5),0,(none),0,0,-1,Europe/London
+Room L201,London Office (5),1,(none),0,0,-1,Europe/London
+Room L202,London Office (5),1,(none),0,0,-1,Europe/London
+Room LA101,Los Angeles Office,0,Conference Style,0,0,8,US/Pacific
+Room LA102,Los Angeles Office,0,Round Table,0,0,6,US/Pacific
+Room M101,Madrid Office,0,Conference Style,15,0,10,Europe/Brussels
+Room M102,Madrid Office,0,Conference Style,15,0,4,Europe/Brussels
+Room M103,Madrid Office,0,Conference Style,15,0,6,Europe/Brussels
+Room M104,Madrid Office,0,Conference Style,15,0,14,Europe/Brussels
+Room M201,Madrid Office,1,Standard Office,0,0,1,Europe/Brussels
+Room M202,Madrid Office,1,Standard Office,0,0,1,Europe/Brussels
+Room M101,Mumbai Office,0,Conference Style,0,0,4,Asia/Calcutta
+Room M102,Mumbai Office,0,Conference Style,0,0,3,Asia/Calcutta
+Room M103,Mumbai Office,0,Conference Style,15,0,6,Asia/Calcutta
+Room M104,Mumbai Office,0,Conference Style,0,0,4,Asia/Calcutta
+Room M105,Mumbai Office,0,Conference Style,15,0,18,Asia/Calcutta
+Room M106,Mumbai Office,0,Conference Style,15,0,8,Asia/Calcutta
+Room M107,Mumbai Office,0,Conference Style,15,0,10,Asia/Calcutta
+Room M108,Mumbai Office,0,Conference Style,15,0,12,Asia/Calcutta
+Room M109,Mumbai Office,0,Conference Style,15,0,8,Asia/Calcutta
+Room M201,Mumbai Office,1,Standard Office,15,0,1,Asia/Calcutta
+Room M202,Mumbai Office,1,Standard Office,15,0,1,Asia/Calcutta
+Room NY101,New York Office (2),0,Round Table,0,0,8,America/New_York
+Room NY102,New York Office (2),0,Round Table,0,0,4,America/New_York
+Room NY103,New York Office (2),0,Round Table,0,0,5,America/New_York
+Room NY104,New York Office (2),0,Conference Style,0,0,10,America/New_York
+Room NY105,New York Office (2),0,Conference Style,0,0,8,America/New_York
+Room NY106,New York Office (2),0,Conference Style,0,0,14,America/New_York
+Room NY107,New York Office (2),0,Conference Style,0,0,6,America/New_York
+Room NY108,New York Office (2),0,Conference Style,0,0,6,America/New_York
+Room NY109,New York Office (2),0,(none),0,0,-1,America/New_York
+Room NY1010,New York Office (2),0,(none),0,0,-1,America/New_York
+Room NY201,New York Office (2),1,Conference Style,0,0,16,America/New_York
+Room NY202,New York Office (2),1,Conference Style,0,0,10,America/New_York
+Room NY203,New York Office (2),1,Conference Style,0,0,10,America/New_York
+Room NY301,New York Office (2),2,Conference Style,0,0,10,America/New_York
+Room NY302,New York Office (2),2,Conference Style,0,0,7,America/New_York
+Room NY303,New York Office (2),2,Conference Style,0,0,7,America/New_York
+Room NY304,New York Office (2),2,(none),0,0,1,America/New_York
+Room NY305,New York Office (2),2,(none),0,0,1,America/New_York
+Room NY401,New York Office (2),3,(none),0,0,-1,America/New_York
+Room NY402,New York Office (2),3,Conference Style,0,0,10,America/New_York
+Room NY403,New York Office (2),3,Conference Style,0,0,7,America/New_York
+Room NY404,New York Office (2),3,Conference Style,0,0,7,America/New_York
+Room NY405,New York Office (2),3,Conference Style,0,0,4,America/New_York
+Room NY406,New York Office (2),3,Conference Style,0,0,8,America/New_York
+Room NY501,New York Office (2),4,Conference Style,0,0,10,America/New_York
+Room NY502,New York Office (2),4,Conference Style,0,0,7,America/New_York
+Room NY503,New York Office (2),4,Conference Style,0,0,7,America/New_York
+Room NY504,New York Office (2),4,(none),0,0,1,America/New_York
+Room NY505,New York Office (2),4,(none),0,0,1,America/New_York
+Room NY601,New York Office (2),5,Conference Style,0,0,12,America/New_York
+Room NY602,New York Office (2),5,Round Table,0,0,8,America/New_York
+Room NY701,New York Office (2),6,Open Space,0,0,230,America/New_York
+Room NY702,New York Office (2),6,Other Style,0,0,13,America/New_York
+Room NY703,New York Office (2),6,Other Style,0,0,17,America/New_York
+Room NY704,New York Office (2),6,Other Style,30,30,30,America/New_York
+Room NY705,New York Office (2),6,Other Style,30,30,200,America/New_York
+Room NY801,New York Office (2),7,Open Space,0,0,300,America/New_York
+Room NY802,New York Office (2),7,Conference Style,15,0,12,America/New_York
+Room NY803,New York Office (2),7,Round Table,15,0,6,America/New_York
+Room NY804,New York Office (2),7,Round Table,15,0,4,America/New_York
+Room NY805,New York Office (2),7,Round Table,15,0,4,America/New_York
+Room NY806,New York Office (2),7,Conference Style,15,0,18,America/New_York
+Room NY807,New York Office (2),7,Open Space,0,0,20,America/New_York
+Room NY808,New York Office (2),7,Round Table,0,0,0,America/New_York
+Room NY901,New York Office (2),8,Conference Style,15,0,12,America/New_York
+Room NY902,New York Office (2),8,Round Table,15,0,6,America/New_York
+Room NY903,New York Office (2),8,Conference Style,15,0,7,America/New_York
+Room NY904,New York Office (2),8,U-Shape Style,15,0,7,America/New_York
+Room NY905,New York Office (2),8,Conference Style,15,0,25,America/New_York
+Room NY906,New York Office (2),8,Conference Style,15,0,13,America/New_York
+Room NY907,New York Office (2),8,Conference Style,15,0,33,America/New_York
+Room NY908,New York Office (2),8,Conference Style,15,0,7,America/New_York
+Room NY909,New York Office (2),8,Conference Style,15,0,7,America/New_York
+Room NY9010,New York Office (2),8,Conference Style,15,0,11,America/New_York
+Room NY9011,New York Office (2),8,Round Table,15,0,4,America/New_York
+Room NY9012,New York Office (2),8,Other Style,30,30,38,America/New_York
+Room NY9013,New York Office (2),8,Other Style,30,30,60,America/New_York
+Room NY9014,New York Office (2),8,Other Style,30,30,40,America/New_York
+Room NY9015,New York Office (2),8,Conference Style,15,0,19,America/New_York
+Room NY9016,New York Office (2),8,Conference Style,15,0,19,America/New_York
+Room NY9017,New York Office (2),8,U-Shape Style,15,0,24,America/New_York
+Room NY9018,New York Office (2),8,Hollow Square,15,0,36,America/New_York
+Room NY9019,New York Office (2),8,Classroom Style,15,0,60,America/New_York
+Room NY9020,New York Office (2),8,Open Space,0,0,129,America/New_York
+Room NY9021,New York Office (2),8,Other Style,30,30,90,America/New_York
+Room NY101,New York Office (3),0,(none),0,0,-1,America/New_York
+Room NY201,New York Office (3),1,Conference Style,15,0,18,America/New_York
+Room NY202,New York Office (3),1,Conference Style,30,0,19,America/New_York
+Room NY203,New York Office (3),1,Conference Style,30,0,19,America/New_York
+Room NY204,New York Office (3),1,Conference Style,30,0,75,America/New_York
+Room NY205,New York Office (3),1,Conference Style,0,0,11,America/New_York
+Room NY206,New York Office (3),1,Conference Style,0,0,8,America/New_York
+Room NY207,New York Office (3),1,Conference Style,0,0,7,America/New_York
+Room NY208,New York Office (3),1,Conference Style,0,0,7,America/New_York
+Room NY209,New York Office (3),1,Conference Style,0,0,8,America/New_York
+Room NY2010,New York Office (3),1,Conference Style,0,0,8,America/New_York
+Room NY2011,New York Office (3),1,Conference Style,0,0,8,America/New_York
+Room NY2012,New York Office (3),1,Conference Style,0,0,8,America/New_York
+Room NY2013,New York Office (3),1,Conference Style,0,0,7,America/New_York
+Room NY2014,New York Office (3),1,Conference Style,0,0,150,America/New_York
+Room NY101,New York Office (4),0,Conference Style,0,0,10,America/New_York
+Room NY102,New York Office (4),0,Conference Style,0,0,8,America/New_York
+Room NY103,New York Office (4),0,Conference Style,0,0,10,America/New_York
+Room NY104,New York Office (4),0,Conference Style,0,0,10,America/New_York
+Room NY105,New York Office (4),0,(none),0,0,1,America/New_York
+Room NY106,New York Office (4),0,Open Space,15,0,75,America/New_York
+Room P101,Paris Office,0,Conference Style,15,0,12,Europe/Brussels
+Room P102,Paris Office,0,Conference Style,15,0,10,Europe/Brussels
+Room P103,Paris Office,0,Conference Style,15,0,8,Europe/Brussels
+Room P104,Paris Office,0,Conference Style,15,0,8,Europe/Brussels
+Room P105,Paris Office,0,Conference Style,15,0,6,Europe/Brussels
+Room P201,Paris Office,1,Standard Office,0,0,1,Europe/Brussels
+Room P202,Paris Office,1,Standard Office,0,0,1,Europe/Brussels
+Room S101,San Francisco Office,0,Conference Style,15,0,4,US/Pacific
+Room S102,San Francisco Office,0,Conference Style,15,0,4,US/Pacific
+Room S103,San Francisco Office,0,Conference Style,15,0,7,US/Pacific
+Room S104,San Francisco Office,0,Conference Style,15,0,6,US/Pacific
+Room S105,San Francisco Office,0,Conference Style,15,0,29,US/Pacific
+Room S106,San Francisco Office,0,Conference Style,15,0,7,US/Pacific
+Room S107,San Francisco Office,0,Conference Style,15,0,25,US/Pacific
+Room S108,San Francisco Office,0,Conference Style,15,0,6,US/Pacific
+Room S109,San Francisco Office,0,Conference Style,0,0,4,US/Pacific
+Room S1010,San Francisco Office,0,Conference Style,0,0,4,US/Pacific
+Room S1011,San Francisco Office,0,(none),0,0,1,US/Pacific
+Room S201,San Francisco Office,1,Conference Style,15,0,4,US/Pacific
+Room S202,San Francisco Office,1,Conference Style,15,0,7,US/Pacific
+Room S203,San Francisco Office,1,Conference Style,15,0,10,US/Pacific
+Room S204,San Francisco Office,1,Conference Style,15,0,7,US/Pacific
+Room S205,San Francisco Office,1,Conference Style,15,0,25,US/Pacific
+Room S301,San Francisco Office,2,Conference Style,15,0,7,US/Pacific
+Room S401,San Francisco Office,3,Standard Office,0,0,1,US/Pacific
+Room S402,San Francisco Office,3,Standard Office,0,0,1,US/Pacific
+Room S101,San Fransisco Office (2),0,(none),15,0,6,US/Pacific
+Room S102,San Fransisco Office (2),0,Conference Style,15,0,10,US/Pacific
+Room S103,San Fransisco Office (2),0,Conference Style,15,0,32,US/Pacific
+Room S104,San Fransisco Office (2),0,Conference Style,15,0,10,US/Pacific
+Room S105,San Fransisco Office (2),0,(none),0,0,1,US/Pacific
+Room S201,San Fransisco Office (2),1,Conference Style,15,0,10,US/Pacific
+Room S202,San Fransisco Office (2),1,Conference Style,15,0,6,US/Pacific
+Room S203,San Fransisco Office (2),1,Conference Style,15,0,12,US/Pacific
+Room S204,San Fransisco Office (2),1,Conference Style,0,0,8,US/Pacific
+Room S301,San Fransisco Office (2),2,Standard Office,0,0,1,US/Pacific
+Room S302,San Fransisco Office (2),2,Standard Office,0,0,1,US/Pacific
+Room S303,San Fransisco Office (2),2,(none),0,0,-1,US/Pacific
+Room S101,Seoul Office,0,Conference Style,15,0,22,Asia/Tokyo
+Room S102,Seoul Office,0,Conference Style,0,0,5,Asia/Tokyo
+Room S103,Seoul Office,0,Conference Style,0,0,3,Asia/Tokyo
+Room S104,Seoul Office,0,Conference Style,15,0,5,Asia/Tokyo
+Room S105,Seoul Office,0,Conference Style,15,0,10,Asia/Tokyo
+Room S106,Seoul Office,0,Conference Style,15,0,10,Asia/Tokyo
+Room S107,Seoul Office,0,Conference Style,0,0,3,Asia/Tokyo
+Room S108,Seoul Office,0,Conference Style,0,0,5,Asia/Tokyo
+Room S201,Seoul Office,1,Standard Office,0,0,1,Asia/Tokyo
+Room S202,Seoul Office,1,Standard Office,0,0,1,Asia/Tokyo
+Room S101,Shanghai Office,0,Conference Style,15,0,6,Asia/Hong_Kong
+Room S102,Shanghai Office,0,Conference Style,15,0,18,Asia/Hong_Kong
+Room S103,Shanghai Office,0,Conference Style,15,0,14,Asia/Hong_Kong
+Room S104,Shanghai Office,0,Conference Style,15,0,6,Asia/Hong_Kong
+Room S105,Shanghai Office,0,Standard Office,0,0,1,Asia/Hong_Kong
+Room S106,Shanghai Office,0,Standard Office,0,0,1,Asia/Hong_Kong
+Room S201,Shanghai Office,1,Conference Style,15,0,10,Asia/Hong_Kong
+Room S202,Shanghai Office,1,Conference Style,15,0,2,Asia/Hong_Kong
+Room S101,Singapore Office,0,Conference Style,15,0,16,Asia/Hong_Kong
+Room S102,Singapore Office,0,Conference Style,15,0,6,Asia/Hong_Kong
+Room S103,Singapore Office,0,Conference Style,15,0,6,Asia/Hong_Kong
+Room S104,Singapore Office,0,Conference Style,15,0,10,Asia/Hong_Kong
+Room S105,Singapore Office,0,Conference Style,15,0,12,Asia/Hong_Kong
+Room S201,Singapore Office,1,Standard Office,0,0,1,Asia/Hong_Kong
+Room S202,Singapore Office,1,Standard Office,0,0,1,Asia/Hong_Kong
+Room S101,Stockholm Office,0,Conference Style,15,0,10,Europe/Brussels
+Room S102,Stockholm Office,0,Conference Style,15,0,4,Europe/Brussels
+Room S103,Stockholm Office,0,Standard Office,0,0,1,Europe/Brussels
+Room S104,Stockholm Office,0,Standard Office,0,0,1,Europe/Brussels
+Room S101,Sydney Office,0,Round Table,0,0,4,Australia/Sydney
+Room S102,Sydney Office,0,Conference Style,15,0,9,Australia/Sydney
+Room S103,Sydney Office,0,Conference Style,15,0,14,Australia/Sydney
+Room S104,Sydney Office,0,Conference Style,15,0,8,Australia/Sydney
+Room S105,Sydney Office,0,Round Table,15,0,4,Australia/Sydney
+Room S106,Sydney Office,0,Conference Style,15,0,10,Australia/Sydney
+Room S107,Sydney Office,0,Conference Style,15,0,6,Australia/Sydney
+Room S108,Sydney Office,0,Round Table,0,0,8,Australia/Sydney
+Room S109,Sydney Office,0,Other Style,0,0,4,Australia/Sydney
+Room S1010,Sydney Office,0,Other Style,0,0,6,Australia/Sydney
+Room S1011,Sydney Office,0,Conference Style,15,0,50,Australia/Sydney
+Room S201,Sydney Office,1,Standard Office,0,0,1,Australia/Sydney
+Room S202,Sydney Office,1,Standard Office,0,0,1,Australia/Sydney
+Room T101,Tokyo Office,0,Conference Style,15,0,6,Asia/Tokyo
+Room T102,Tokyo Office,0,Conference Style,15,0,6,Asia/Tokyo
+Room T103,Tokyo Office,0,Conference Style,15,0,10,Asia/Tokyo
+Room T104,Tokyo Office,0,Conference Style,15,0,16,Asia/Tokyo
+Room T105,Tokyo Office,0,Conference Style,15,0,10,Asia/Tokyo
+Room T106,Tokyo Office,0,Conference Style,15,0,16,Asia/Tokyo
+Room T107,Tokyo Office,0,Conference Style,15,0,8,Asia/Tokyo
+Room T108,Tokyo Office,0,Conference Style,15,0,6,Asia/Tokyo
+Room T201,Tokyo Office,1,Standard Office,0,0,1,Asia/Tokyo
+Room T202,Tokyo Office,1,Standard Office,0,0,1,Asia/Tokyo
+Room T203,Tokyo Office,1,Standard Office,0,0,4,Asia/Tokyo
