@@ -35,12 +35,12 @@
 (defn submit
   ([label]
    [:input {:type "submit"
-            :class "bg-kkr-purple p-1.5 rounded-lg text-white"
+            :class "bg-kkr-purple py-1.5 px-2 rounded-lg text-white"
             :value label}])
   ([id label]
    [:input {:type "submit"
             :id id
-            :class "bg-kkr-purple p-1.5 rounded-lg text-white"
+            :class "bg-kkr-purple py-1.5 px-2 rounded-lg text-white"
             :value label}]))
 
 (defn submit-hidden [id]

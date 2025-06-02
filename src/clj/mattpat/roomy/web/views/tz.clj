@@ -31,7 +31,10 @@
 
 (defcomponent ^:endpoint search [req command q new-tz]
   (case command
-    "q" (search-options q (boolean tz))
+    "q"
+    (list
+     [:div#warning.hidden]
+     (search-options q (boolean tz)))
     [:div
      [:input {:class "w-full p-2 mb-1"
               :id "tz-disp"

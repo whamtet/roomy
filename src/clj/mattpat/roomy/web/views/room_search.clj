@@ -309,7 +309,7 @@ bg-slate-50"}]
 (defcomponent ^:endpoint room-search [req
                                       ^:trim q
                                       ^:trim q-building
-                                      ^:long q-floor
+                                      ^:long-option q-floor
                                       ^:trim q-setup
                                       start-date
                                       ^:long-option capacity

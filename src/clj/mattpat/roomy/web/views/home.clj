@@ -49,7 +49,7 @@
      (room-search/room-search req)
      ]]))
 
-(defcomponent ^:endpoint home [req new-tz]
+(defcomponent ^:endpoint home [req ^:trim new-tz]
   (cond
 
    new-tz
@@ -60,13 +60,19 @@
 
    user_name
    [:form {:hx-post "home"}
-    [:h1.text-center.mt-8.mb-8 "Roomy"]
+    [:h1.text-center.mt-8.mb-4 "Roomy"]
+    [:h4.text-center.mb-4
+     "Roomy is a demo "
+     [:a.text-clj-blue {:href "https://simpleui.io"} "SimpleUI"]
+     " calendar webapp."]
     [:div.flex.justify-center
      [:div {:class "w-1/2 border rounded-lg p-2"}
       [:div.my-1.p-1 "Timezone"]
       (tz/search req)
-      (when (simpleui/post? req)
-            (components/warning "Select Timezone"))
+      (if (simpleui/post? req)
+        [:div#warning.mt-1.mb-3
+         (components/warning "Select Timezone")]
+        [:div#warning.hidden])
       [:div.mt-1
        (components/submit "Begin")]]]]
 
@@ -84,17 +90,15 @@
   (simpleui/make-routes
    ""
    (fn [req]
-     (if (and dev? (-> req :session :user_name not))
-       (user/dev-session req)
-       (let [logged-in? (logged-in? req)]
-         (page-htmx
-          {:datepicker? logged-in?
-           :hyperscript? logged-in?
-           :si-stack (when logged-in? ["room-id" "start-date" "tab-index"
-                                       "hour" "minute" "hour2" "minute2"
-                                       "multiday"
-                                       ;; repeat types
-                                       "interval" "limit-type" "end-date" "days" "date-pattern" "repeat-stored"
-                                       ])
-           :js (when logged-in? ["/multiday.js" "/booking.js" "/contenteditable.js"])}
-          (home req)))))))
+     (let [logged-in? (logged-in? req)]
+       (page-htmx
+        {:datepicker? logged-in?
+         :hyperscript? logged-in?
+         :si-stack (when logged-in? ["room-id" "start-date" "tab-index"
+                                     "hour" "minute" "hour2" "minute2"
+                                     "multiday"
+                                     ;; repeat types
+                                     "interval" "limit-type" "end-date" "days" "date-pattern" "repeat-stored"
+                                     ])
+         :js (when logged-in? ["/multiday.js" "/booking.js" "/contenteditable.js"])}
+        (home req))))))

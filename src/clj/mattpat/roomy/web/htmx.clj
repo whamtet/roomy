@@ -33,6 +33,10 @@
     [:head
      [:meta {:charset "UTF-8"}]
      [:title "Roomy"]
+     [:meta {:property "og:title" :content "Roomy SimpleUI Demo"}]
+     [:meta {:property "og:type" :content "website"}]
+     [:meta {:property "og:url" :content "https://roomy.simpleui.io/"}]
+     [:meta {:property "og:image" :content "https://roomy.simpleui.io/icon.svg"}]
      [:link {:rel "icon" :href "/icon.svg"}]
      ;; fonts
      [:link {:rel "preconnect" :href "https://fonts.googleapis.com"}]
@@ -62,6 +66,7 @@
   (if-let [sym (simpleui/symbol-or-as req)]
     `(simpleui/defcomponent ~name ~args
       (let [{:keys [~'session ~'db ~'node ~'graph ~'event-bus]} ~sym
-            {:keys [~'user_name ~'tz ~'locked? ~'tf]} ~'session]
+            {:keys [~'user_name ~'tz ~'locked? ~'tf]} ~'session
+            ~'user_name (or ~'user_name "Devy")]
         ~@body))
     (throw (Exception. "req ill defined"))))
