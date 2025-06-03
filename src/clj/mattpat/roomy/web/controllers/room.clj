@@ -73,7 +73,7 @@
       e)))
 
 #_
-(defn get-bookings-db [_db date-str tz locked? room-id]
+(defn get-bookings-db [date-str tz locked? room-id]
   (let [assoc-room-services (fn [{:keys [services start end] :as e}]
                               (if-let [{:keys [setup-time teardown-time] :as service-times} (get services room-id)]
                                 (-> (merge e service-times)
@@ -81,7 +81,7 @@
                                 e))
         start-of-day (time/->zoned-date-time date-str tz)
         end-of-day (time/+day start-of-day 1)] #_
-    (->> (calendar-view/view-for db mailbox start-of-day end-of-day)
+    (->> (calendar-view/view-for mailbox start-of-day end-of-day)
          (map #(assoc % :id room-id))
          (map assoc-room-services)
          (map #(util/rename % :subject :title)))))
@@ -121,9 +121,7 @@
 
 (def bookings (atom {}))
 
-(defn insert-booking [graph
-                      event-bus
-                      {:keys [tz week-start]}
+(defn insert-booking [{:keys [tz week-start]}
                       service-info t1 t2
                       title details
                       repeat-info]
@@ -132,8 +130,8 @@
         recurrence (->patterned-recurrence week-start tz t1 repeat-info)]))
 
 (defn get-bookings-db
-  ([_ date-str tz locked? room-id] (get-bookings-db _ date-str tz locked? room-id 0))
-  ([_ date-str tz locked? room-id i]
+  ([date-str tz locked? room-id] (get-bookings-db date-str tz locked? room-id 0))
+  ([date-str tz locked? room-id i]
    (or
     (->> (get @bookings room-id)
          (filter (time/filter-day date-str tz locked?))
@@ -146,7 +144,7 @@
       (recur _ date-str tz locked? room-id 1)))))
 
 (defn get-bookingss [date-str tz locked? companies]
-  (mapcat #(get-bookings-db nil date-str tz locked? %) companies))
+  (mapcat #(get-bookings-db date-str tz locked? %) companies))
 
 (defn- get-bookings-all [companies]
   (mapcat @bookings companies))
@@ -165,4 +163,4 @@
   (->> (dissoc locked? room-id)
        keys
        (get-bookingss start-date tz locked?)
-       (time/other-bookings start-date tz locked? (get-bookings-db nil start-date tz locked? room-id))))
+       (time/other-bookings start-date tz locked? (get-bookings-db start-date tz locked? room-id))))

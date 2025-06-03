@@ -178,8 +178,13 @@ const mod12_ = x => x === 0 ? 12 : ((x - 1) % 12) + 1;
 const mod12 = x => mod12_(Number(x));
 
 function submitBooking() {
-    const bookingDetails = $('#booking-details').value.trim();
-    if (bookingDetails || confirm('Leave body empty?')) {
-        $('#book-submit').click();
+    const form = $('#booking-save');
+    if (form.checkValidity()) {
+        const bookingDetails = $('#booking-details').value.trim();
+        if (bookingDetails || confirm('Leave body empty?')) {
+            $('#book-submit').click();
+        }
+    } else {
+        form.reportValidity();
     }
 }

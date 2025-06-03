@@ -65,7 +65,7 @@
   [name [req :as args] & body]
   (if-let [sym (simpleui/symbol-or-as req)]
     `(simpleui/defcomponent ~name ~args
-      (let [{:keys [~'session ~'db ~'node ~'graph ~'event-bus]} ~sym
+      (let [{:keys [~'session]} ~sym
             {:keys [~'user_name ~'tz ~'locked? ~'tf]} ~'session
             ~'user_name (or ~'user_name "Devy")]
         ~@body))

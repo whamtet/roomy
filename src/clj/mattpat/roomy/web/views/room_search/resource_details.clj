@@ -246,5 +246,5 @@ absolute invisible z-10 p-2 bg-white border"}]
              ;; save
              [:div.mr-2
               (components/submit "regular-save" "Save")]
-             [:div {:onclick "$('#add').value = 'true'; $('#regular-save').click();"}
+             #_[:div {:onclick "$('#add').value = 'true'; $('#regular-save').click();"}
               (components/button "Save and Add Another")]]]]))))))

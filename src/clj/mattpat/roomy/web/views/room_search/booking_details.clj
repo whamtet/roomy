@@ -31,7 +31,7 @@
   (case command
         "title" (assoc session :title title)
         "details" (assoc session :details details)
-        (do (room/insert-booking graph event-bus session
+        (do (room/insert-booking session
                                  (room/assoc-services locked? room-id)
                                  (parse-time t1) (parse-time t2)
                                  title details
@@ -64,7 +64,8 @@
             :si-clear [:hour :minute :hour2 :minute2 :multiday]
             :hx-target "#modal"}
       (components/button "Back")]
-     [:form {:hx-post "booking-save"
+     [:form {:id "booking-save"
+             :hx-post "booking-save"
              :hx-include ".booking-info"}
       (components/hiddens
         "t1" t1

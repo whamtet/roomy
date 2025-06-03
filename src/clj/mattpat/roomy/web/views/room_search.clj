@@ -134,7 +134,7 @@
 [:div {:class "border h-[100px] border-black border-b-red-500 border-b-2"}]
 [:div {:class "h-[25px] text-xs text-gray-300 border-t cursor-pointer
 bg-slate-50"}]
-(defn- booking-line [db start-date tz {:keys [id description]} locked?]
+(defn- booking-line [start-date tz {:keys [id description]} locked?]
   [:div {:class "flex flex-col relative overflow-hidden"
          :style {:width col-width-style}}
    ;; grid
@@ -198,7 +198,7 @@ bg-slate-50"}]
                               :height (scale-time teardown-duration)
                               :width col-width-style}
                       :title "Teardown"}]))))
-    (room/get-bookings-db db start-date tz locked? id))
+    (room/get-bookings-db start-date tz locked? id))
    ])
 
 (defcomponent ^:endpoint room-book [req ^:edn results start-date]
@@ -211,7 +211,7 @@ bg-slate-50"}]
      (headers req start-date results)
      [:div.flex
       (timeline start-date tzs tf)
-      (map #(booking-line db start-date tz % locked?) results)]
+      (map #(booking-line start-date tz % locked?) results)]
      [:div {:class "border border-black"
             :style {:width (-> results count inc (* col-width) (str "px"))}
             :hx-post "room-book"

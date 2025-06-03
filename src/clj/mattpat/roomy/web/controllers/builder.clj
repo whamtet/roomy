@@ -48,7 +48,7 @@
 
 (util/defm block-inline? [_]
   (assert (number? _))
-  (zero? (rand-int 4)))
+  false)
 
 (defn field-parser [type]
   (case type
@@ -81,7 +81,6 @@
   "converts params ({uuid} [val0 val1]}) into
   [{uuid val0} {uuid val1}]"
   [n resource-id params]
-  (prn n resource-id params)
   (let [params (merge-checkboxes params n)]
     (->> resource-id
          fields
