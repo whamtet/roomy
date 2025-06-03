@@ -1,10 +1,12 @@
 (ns mattpat.roomy.web.views.room-search.services
     (:require
       [mattpat.roomy.util :as util :refer [mk]]
+      [mattpat.roomy.web.controllers.builder :as builder]
       [mattpat.roomy.web.controllers.room :as room]
       [mattpat.roomy.web.htmx :refer [defcomponent]]
       [mattpat.roomy.web.views.components :as components]
       [mattpat.roomy.web.views.icons :as icons]
+      [mattpat.roomy.web.views.room-search.resource-details :as resource-details]
       [simpleui.core :as simpleui]
       [simpleui.rt :as rt]))
 
@@ -19,13 +21,14 @@
                                    ;; update vals
                                    ^:boolean select
                                    ^:long quantity
-                                   ;; preset
+                                   ;; from hx-vals on 'Services' button
                                    room-id-service
                                    ^:long resource-id
                                    description
                                    ^:boolean allow-instructions
                                    ^:long min-quantity
                                    ^:long quantity-available]
+  resource-details/resource-details
   (let [quantity (if top-level?
                    (if quantity
                      (util/bind (max min-quantity 1) quantity (max quantity-available 1))
@@ -34,9 +37,9 @@
                        0 #_deselect))
                    (get-in locked? [room-id-service :resources resource-id :quantity] 0))
         checked? (pos? quantity)
-        fields [] ;(builder/fields node resource-id)
+        fields (builder/fields resource-id)
         field-size (->> fields (map field-length) (apply +))
-        block-inline? false ; (builder/block-inline? node resource-id)
+        block-inline? (builder/block-inline? resource-id)
         inline? (and checked? (not block-inline?) (<= field-size 1))
         many-fields? (> field-size 1)]
     (when-top-level
@@ -56,7 +59,7 @@
                   :hx-vals (mk room-id-service resource-id description allow-instructions
                                min-quantity quantity-available)}]
          [:span.m-2 description]]
-        #_(simpleui/apply-component resource-details/single-resource req fields room-id-service resource-id)]
+        (simpleui/apply-component resource-details/single-resource req fields room-id-service resource-id)]
        [:div {:class "flex items-center w-1/2"
               :hx-target "this"}
         [:input {:class "m-2"

@@ -35,11 +35,12 @@
 (def resources
   (->> "static/resources.csv"
        util/slurp-csv
-       (map (fn [[description min-quantity allow-instructions quantity-available]]
-              {:description description
-               :min-quantity (Long/parseLong min-quantity)
-               :allow-instructions (= "TRUE" allow-instructions)
-               :quantity-available (Long/parseLong quantity-available)}))))
+       (map-indexed (fn [i [description min-quantity allow-instructions quantity-available]]
+                      {:resource-id i
+                       :description description
+                       :min-quantity (Long/parseLong min-quantity)
+                       :allow-instructions (= "TRUE" allow-instructions)
+                       :quantity-available (Long/parseLong quantity-available)}))))
 
 (def users
   (map-indexed clean-user
