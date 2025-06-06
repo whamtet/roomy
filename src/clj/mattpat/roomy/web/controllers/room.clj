@@ -8,7 +8,6 @@
 (def all-buildings room-static/all-buildings)
 (def all-setups room-static/all-setups)
 (def building->floors room-static/building->floors)
-(def floor->rooms room-static/floor->rooms)
 (def search-all room-static/search-all)
 (def get-locked room-static/get-locked)
 (def id->room room-static/id->room)

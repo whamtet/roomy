@@ -90,30 +90,10 @@
 (def all-setups
   (->> rooms (keep :setup) distinct sort))
 
-(defn- distinct-floors [s]
-  (vals
-   (reduce
-    (fn [m {:keys [floor floor-image]}]
-      (if (m floor)
-        (if (get-in m [floor :floor-image])
-          m
-          (assoc-in m [floor :floor-image] floor-image))
-        (assoc m floor {:floor floor :floor-image floor-image})))
-    {}
-    s)))
-
 (def building->floors
   (util/group-by-map
    :building
-   (fn [buildings]
-     (->> buildings distinct-floors (sort-by :floor)))
-   rooms))
-
-(def floor->rooms
-  (util/group-by-map
-    :floor-image
-   (fn [rooms]
-     (->> rooms (map #(select-keys % [:id :x :y :description :width :height]))))
+   #(->> % (map :floor) distinct sort)
    rooms))
 
 (defn- search-rooms* [q]

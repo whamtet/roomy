@@ -7,7 +7,6 @@
       [mattpat.roomy.web.controllers.room :as room]
       [mattpat.roomy.web.htmx :refer [defcomponent]]
       [mattpat.roomy.web.views.room-search.booking-modal :as booking-modal]
-      [mattpat.roomy.web.views.room-search.floor-modal :as floor-modal]
       [mattpat.roomy.web.views.components :as components]
       [mattpat.roomy.web.views.icons :as icons]
       [mattpat.roomy.web.views.room-search.services :as services]
@@ -250,7 +249,7 @@ bg-slate-50"}]
              :hx-include ".room-search"}
     [:option {:value ""} "Filter floor..."]
     (map
-     (fn [{:keys [floor]}]
+     (fn [floor]
        [:option {:value floor
                  :selected (= floor q-floor)} (floor-disp floor)])
      floors)]])
@@ -314,7 +313,6 @@ bg-slate-50"}]
                                       start-date
                                       ^:long-option capacity
                                       new-tz]
-  floor-modal/floor-modal
   booking-modal/booking-modal
   (update-tz
    (let [results (room/search-all q q-building q-floor locked? capacity q-setup)
