@@ -6,9 +6,9 @@
       java.time.format.TextStyle
       java.util.Locale))
 
-(defn inc-day [a]
+(defn- inc-day [a]
   (jt/plus a (jt/days 1)))
-(defn -day [a b]
+(defn- -day [a b]
   (jt/minus a (jt/days b)))
 
 (defn calendar-range [year month week-start]

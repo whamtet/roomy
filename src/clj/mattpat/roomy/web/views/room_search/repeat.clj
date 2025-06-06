@@ -12,7 +12,7 @@
       (str (.substring s 1))))
 
 (defn- min-daily-frequency [tab-index multiday]
-  (if (zero? tab-index)
+  (if (zero? tab-index) ;; we're on a single day, so min-daily-frequency is 1
     1
     (time/min-daily-frequency multiday)))
 

@@ -16,13 +16,13 @@
 (def col-width 120)
 (def col-width-style "120px")
 
-(defn- primary-string [hour tz tf?]
-  (if tf?
+(defn- primary-string [hour tz twenty-four?]
+  (if twenty-four?
     (format "%02d:00 %s" hour (timezones/id->short tz))
     (format "%s %s" (util/mod12-suffix-short hour) (timezones/id->short tz))))
-(defn- other-strings [start-date hour tz1 tz2 tf?]
+(defn- other-strings [start-date hour tz1 tz2 twenty-four?]
   (let [[hour offset] (time/get-local start-date hour tz1 tz2)]
-    (if tf?
+    (if twenty-four?
       (if offset
         (format "%02d:00 %s (%s%s)"
                 hour
@@ -104,15 +104,15 @@
                                                      (str first-name " " last-name))]
       (lock req results nil id nil nil nil)])])
 
-(defn- timeline [start-date [primary-tz & tzs] tf?]
+(defn- timeline [start-date [primary-tz & tzs] twenty-four?]
   [:div {:class "flex flex-col"
          :style {:width col-width-style}}
    (map
     (fn [hour]
       [:div {:class "p-1 border h-[100px]"}
-       [:div (primary-string hour primary-tz tf?)]
+       [:div (primary-string hour primary-tz twenty-four?)]
        (for [tz tzs]
-         [:div.text-gray-500.text-sm (other-strings start-date hour primary-tz tz tf?)])])
+         [:div.text-gray-500.text-sm (other-strings start-date hour primary-tz tz twenty-four?)])])
     (range 24))])
 
 (defn scale-time [t]
@@ -171,11 +171,11 @@ bg-slate-50"}]
     ;; existing bookings
    (map
     (fn [booking]
-      (let [[minutes duration] (time/booking-offsets booking start-date tz)
+      (let [[minutes duration] (time/booking-offset booking start-date tz)
             [start end] (time/format-booking booking start-date tz)
 
-            [setup-minutes setup-duration] (time/setup-offsets booking start-date tz locked?)
-            [teardown-minutes teardown-duration] (time/teardown-offsets booking start-date tz locked?)
+            [setup-minutes setup-duration] (time/setup-offset booking start-date tz locked?)
+            [teardown-minutes teardown-duration] (time/teardown-offset booking start-date tz locked?)
             attendees-disp (->> booking :attendees (map room/id->user-disp) (string/join ", "))]
         (list
          (when (pos? setup-duration)

@@ -17,9 +17,6 @@
 (defn +month [a b]
   (jt/plus a (jt/months b)))
 
-(defn range-day [t]
-  (iterate #(+day % 1) t))
-
 (def format-date "MM/dd/yyyy")
 (def format-date-hour "MM/dd/yyyy HH")
 (def format-date-time "MM/dd/yyyy HH:mm")
@@ -81,7 +78,9 @@
       (jt/zoned-date-time tz)
       (jt/< (jt/zoned-date-time))))
 
-(defn past-next? [date-str hour minute tz offset]
+(defn past-next?
+  "used by calendar display"
+  [date-str hour minute tz offset]
   (-> (->local-date-time date-str hour minute)
       (jt/zoned-date-time tz)
       (+min offset)
@@ -91,7 +90,9 @@
   (.getDays
     (jt/period (jt/local-date t1) (jt/local-date t2))))
 
-(defn get-local [date-str hour id1 id2]
+(defn get-local
+  "displaying timezones"
+  [date-str hour id1 id2]
   (let [local1 (->local-date-time date-str hour)
         local2 (-> local1 (jt/zoned-date-time id1) (jt/local-date-time id2))
         date-diff (date-diff local1 local2)]
@@ -122,16 +123,6 @@
       (jt/truncate-to :minutes)
       (+min 1)))
 
-(defn now-local []
-  (jt/truncate-to (jt/local-date-time) :hours))
-
-(defn now+ [mins]
-  (-> (jt/instant) (+min mins) jt/java-date))
-(defn now+-instant [mins]
-  (-> (jt/instant) (+min mins)))
-(defn past-now? [t]
-  (jt/< t (now+-instant 0)))
-
 (defn- js5 [d]
   [(.getYear d)
    (dec (.getMonthValue d))
@@ -140,18 +131,32 @@
    (.getMinute d)])
 
 (defn- d-mod [d] (mod (.getMinute d) 5))
-(defn- js5-down [d]
+(defn- js5-down
+  "outputs js array"
+  [d]
   (-> d
       (-min (d-mod d))
       js5))
-(defn- js5-up [d]
+(defn- js5-up
+  "outputs js array"
+  [d]
   (js5
    (let [mod (d-mod d)]
      (if (zero? mod)
        d
        (+min d (- 5 mod))))))
 
-(defn latest-start-multiday [date-str hour minute tz events locked?]
+(defn- trunc5-down [x]
+  (- x (mod x 5)))
+(defn- trunc5-up [x]
+  (let [mod (mod x 5)]
+    (if (pos? mod)
+      (+ x 5 (- mod))
+      x)))
+
+(defn latest-start-multiday
+  "latest start before date-str hour minute"
+  [date-str hour minute tz events locked?]
   (let [now {:postbuffer (now tz) :now? true}
         {:keys [title teardown? postbuffer now?]}
         (->> events
@@ -165,24 +170,10 @@
      :min-date (jt/format format-date postbuffer)
      :min-js (js5-up postbuffer)
      :teardown? teardown?}))
-(defn earliest-beginning-multiday [date-str hour minute tz events locked?]
-  (when-let [{:keys [title setup? prebuffer]}
-             (->> events
-                  (map #(assoc % :prebuffer (prebuffer % locked?)))
-                  (filter (filter-after date-str hour minute tz))
-                  (util/min-by :prebuffer))]
-    {:next-title title
-     :max-time (jt/format format-input prebuffer)
-     :max-date (jt/format format-date prebuffer)
-     :max-js (js5-down prebuffer)
-     :setup? setup?}))
 
-(defn- trunc5 [x]
-  (let [y (mod x 5)]
-    (if (pos? y)
-      (- (+ x 5) y)
-      x)))
-(defn latest-start [date-str hour minute tz events locked?]
+(defn latest-start
+  "latest start before date-str hour minute"
+  [date-str hour minute tz events locked?]
   (let [start-of-day {:postbuffer (-> date-str ->local-date-time (jt/zoned-date-time tz))}
         now {:postbuffer (now tz) :now? true}
         {:keys [now? title teardown? postbuffer]}
@@ -195,9 +186,26 @@
      :previous-title title
      :min-time (jt/format format-input postbuffer)
      :h1 (.getHour postbuffer)
-     :m1 (-> postbuffer .getMinute trunc5)
+     :m1 (-> postbuffer .getMinute trunc5-up)
      :teardown? teardown?}))
-(defn earliest-beginning [date-str hour minute tz events locked?]
+
+(defn earliest-beginning-multiday
+  "earliest beginning after date-str hour minute"
+  [date-str hour minute tz events locked?]
+  (when-let [{:keys [title setup? prebuffer]}
+             (->> events
+                  (map #(assoc % :prebuffer (prebuffer % locked?)))
+                  (filter (filter-after date-str hour minute tz))
+                  (util/min-by :prebuffer))]
+    {:next-title title
+     :max-time (jt/format format-input prebuffer)
+     :max-date (jt/format format-date prebuffer)
+     :max-js (js5-down prebuffer)
+     :setup? setup?}))
+
+(defn earliest-beginning
+  "earliest beginning after date-str hour minute"
+  [date-str hour minute tz events locked?]
   (let [end-of-day {:prebuffer (-> date-str ->local-date-time (jt/zoned-date-time tz) (+day 1))}
         {:keys [title setup? prebuffer]}
         (->> events
@@ -208,10 +216,12 @@
     {:next-title title
      :max-time (jt/format format-input prebuffer)
      :h2 (when title (.getHour prebuffer))
-     :m2 (when title (-> prebuffer .getMinute trunc5))
+     :m2 (when title (-> prebuffer .getMinute trunc5-down))
      :setup? setup?}))
 
-(defn random-time [date-str minutes tz]
+(defn random-time
+  "ZonedDateTime on date-str at minutes after midnight"
+  [date-str minutes tz]
   (-> date-str
       ->local-date-time
       (+min minutes)
@@ -220,7 +230,10 @@
 (defn- minutes-between [t1 t2]
   (jt/time-between t1 t2 :minutes))
 
-(defn min-daily-frequency [s]
+(defn min-daily-frequency
+  "s is from multiday selector e.g. 06/04/2025 15:00,06/11/2025 15:00.
+  used to calculate "
+  [s]
   (let [[a b] (.split s ",")]
     (inc
      (jt/time-between
@@ -228,7 +241,9 @@
       (->local-date-time b)
       :days))))
 
-(defn booking-offsets* [start end date-str tz]
+(defn- booking-offsets*
+  "[minutes from midnight, duration in minutes]"
+  [start end date-str tz]
   [(-> date-str
        ->local-date-time
        (jt/zoned-date-time tz)
@@ -237,14 +252,22 @@
 (defmacro bo [a b]
   `(booking-offsets* ~a ~b ~'date-str ~'tz))
 
-(defn booking-offsets [{:keys [start end]} date-str tz]
+(defn booking-offset
+  "for display"
+  [{:keys [start end]} date-str tz]
   (bo start end))
-(defn setup-offsets [event date-str tz locked?]
+(defn setup-offset
+  "for display"
+  [event date-str tz locked?]
   (bo (prebuffer event locked?) (:start event)))
-(defn teardown-offsets [event date-str tz locked?]
+(defn teardown-offset
+  "for display"
+  [event date-str tz locked?]
   (bo (:end event) (postbuffer event locked?)))
 
-(defn- fuse-overlaps* [[head & rest]]
+(defn- fuse-overlaps*
+  "fuse bookings together (for display)"
+  [[head & rest]]
   (reduce
    (fn [[[a b] & rest :as done] [c d :as next]]
      (if (jt/<= c b)
@@ -256,27 +279,38 @@
   (when (not-empty s)
         (reverse (fuse-overlaps* s))))
 
-(defn- subtract-booking [[their-start their-end] [our-start our-end]]
+(defn- subtract-booking
+  "cut our booking out of their booking"
+  [[their-start their-end] [our-start our-end]]
   (if (and (jt/< our-start their-end) (jt/< their-start our-end))
+    ;; we're overlapping them
     (cond
-     (and (jt/< their-start our-start) (jt/< our-end their-end))
-     [[their-start our-start] [our-end their-end]]
-     (and (jt/< our-start their-start) (jt/< their-end our-end))
-     nil
-     (jt/< our-start their-start)
-     [[our-end their-end]]
-     :else
-     [[their-start our-start]])
+      (and (jt/< their-start our-start) (jt/< our-end their-end))
+      ;; we're inside them
+      [[their-start our-start] [our-end their-end]]
+      (and (jt/< our-start their-start) (jt/< their-end our-end))
+      ;; they're inside us
+      nil
+      (jt/< our-start their-start)
+      ;; we overlap their start
+      [[our-end their-end]]
+      :else
+      ;; we overlap their end
+      [[their-start our-start]])
     [[their-start their-end]]))
 
-(defn- remove-bookings [our-bookings bookings]
+(defn- remove-bookings
+  "n^2 cut our-bookings out of bookings"
+  [our-bookings bookings]
   (reduce
    (fn [bookings our-booking]
      (mapcat #(subtract-booking % our-booking) bookings))
    bookings
    our-bookings))
 
-(defn other-bookings [date-str tz locked? our-bookings bookings]
+(defn other-bookings
+  "cut our-bookings out of bookings (from other)"
+  [date-str tz locked? our-bookings bookings]
   (let [booking-pair (fn [booking]
                        [(prebuffer booking locked?)
                         (postbuffer booking locked?)])
@@ -286,7 +320,9 @@
          (remove-bookings (fuse our-bookings))
          (map (fn [[start end]] (bo start end))))))
 
-(defn- format-diff [t date-str tz]
+(defn- format-diff
+  "show time on calendar"
+  [t date-str tz]
   (let [t1 (jt/zoned-date-time (->local-date-time date-str) tz)
         t2 (jt/zoned-date-time t tz)
         s1 (jt/format "HH:mm" t2)
@@ -296,6 +332,8 @@
      (zero? date-diff) s1
      (pos? date-diff) (format "%s (+%s)" s1 date-diff))))
 
-(defn format-booking [{:keys [start end]} date-str tz]
+(defn format-booking
+  "show start and end on calendar"
+  [{:keys [start end]} date-str tz]
   [(format-diff start date-str tz)
    (format-diff end date-str tz)])

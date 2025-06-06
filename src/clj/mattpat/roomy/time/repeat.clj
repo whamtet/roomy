@@ -1,7 +1,9 @@
-(ns mattpat.roomy.web.controllers.repeat
+(ns mattpat.roomy.time.repeat
   (:require
     [java-time.api :as jt]
-    [mattpat.roomy.time :refer [+day +month ->local-date]]))
+    [mattpat.roomy.time :refer [+day +month ->local-date]])
+  (:import
+    java.time.LocalDate))
 
 (def repeat-schema
   [:map
@@ -54,11 +56,16 @@
   (if (= "date" date-pattern)
     (iterate #(+month % interval) start)
     (let [day-of-week (.getDayOfWeek start)
+          adjust-start (fn [^LocalDate d]
+                         (-> start
+                             (.withYear (.getYear d))
+                             (.withMonth (.getMonthValue d))
+                             (.withDayOfMonth (.getDayOfMonth d))))
           i0 (+ (* 12 (.getYear start)) (.getMonthValue start) -1)]
       (if (= "end-week" date-pattern)
-        (map #(-> % (* interval) (+ i0) (week-seq day-of-week) last) (range))
+        (map #(-> % (* interval) (+ i0) (week-seq day-of-week) last adjust-start) (range))
         (let [k (->> (week-seq i0 day-of-week) (take-while #(not= % start)) count)]
-          (map #(-> % (* interval) (+ i0) (week-seq day-of-week) (nth-max k)) (range)))))))
+          (map #(-> % (* interval) (+ i0) (week-seq day-of-week) (nth-max k) adjust-start) (range)))))))
 
 (defmethod repeat* "yearly" [start m]
   (repeat* start (assoc m :interval 12 :repeat-type "monthly")))
