@@ -41,22 +41,14 @@
            :end-teardown (time/+min end teardown-time)
            :attendees attendees
            :teardown? (pos? teardown-time))))
-(defn- assoc-for-attendee [{:keys [start end] :as m}]
-  (assoc m
-         :start-setup start
-         :end-teardown end))
 
 (defn- assoc-conj [m k v]
   (update m k conj v))
 
 (defn- conj-single-booking [date-str tz]
   (fn [m [room-id attendees]]
-    (let [base (base-booking date-str tz)
-          attendee-booking (assoc-for-attendee base)]
-      (as-> m m
-            (assoc-conj m room-id (assoc-for-room room-id base attendees))
-            (reduce
-             #(assoc-conj %1 %2 attendee-booking) m attendees)))))
+    (let [base (base-booking date-str tz)]
+      (assoc-conj m room-id (assoc-for-room room-id base attendees)))))
 
 (defn- conj-random-booking [m date-str tz]
   (reduce
@@ -85,48 +77,12 @@
          (map assoc-room-services)
          (map #(util/rename % :subject :title)))))
 
-(defn- ->pattern [week-start
-                  t1
-                  {:keys [repeat-type
-                          interval
-                          days
-                          date-pattern]}]
-  (let [type (case repeat-type
-                   "daily" "daily"
-                   "weekly" "weekly"
-                   "monthly" (if (= date-pattern "date") "absoluteMonthly" "relativeMonthly")
-                   "yearly" (if (= date-pattern "date") "absoluteYearly" "relativeYearly"))]
-    (cond-> {:firstDayOfWeek (if week-start (.toLowerCase week-start) "sunday")
-             :interval interval
-             :month (-> t1 .getMonth .getValue)
-             :type type}
-            (< 0 (count days) 7) (assoc :daysOfWeek (map #(.toLowerCase %) days))
-            (#{"absoluteMonthly" "absoluteYearly"} type) (assoc :dayOfMonth (.getDayOfMonth t1)))))
-
-(defn- ->range [tz t1 {:keys [limit-type end-date]}]
-  (let [type (case limit-type
-                   "forever" "noEnd"
-                   "date" "endDate"
-                   "numbered")]
-    (cond-> {:startDate (time/format-recurrence t1)
-             :type type}
-            (= type "endDate") (assoc :endDate (time/format-recurrence end-date))
-            (= type "numbered") (assoc :numberOfOccurrences limit-type))))
-
-(defn- ->patterned-recurrence [week-start tz t1 m]
-  (when (-> m :repeat-type #{"daily" "weekly" "monthly" "yearly"})
-        {:pattern (->pattern week-start t1 m)
-         :range (->range tz t1 m)}))
-
 (def bookings (atom {}))
 
 (defn insert-booking [{:keys [tz week-start]}
                       service-info t1 t2
                       title details
-                      repeat-info]
-  (let [user "matt@example.com"
-        room-attendees (map id->room (keys service-info))
-        recurrence (->patterned-recurrence week-start tz t1 repeat-info)]))
+                      repeat-info])
 
 (defn get-bookings-db
   ([date-str tz locked? room-id] (get-bookings-db date-str tz locked? room-id 0))
@@ -136,11 +92,11 @@
          (filter (time/filter-day date-str tz locked?))
          (map (room-services-assocer room-id))
          (sort-by :start)
-         not-empty) #_
+         not-empty)
     (do
       (assert (zero? i) (prn date-str tz locked? room-id))
       (swap! bookings conj-random-booking date-str tz)
-      (recur _ date-str tz locked? room-id 1)))))
+      (recur date-str tz locked? room-id 1)))))
 
 (defn get-bookingss [date-str tz locked? companies]
   (mapcat #(get-bookings-db date-str tz locked? %) companies))
