@@ -25,30 +25,26 @@
                 (select-keys [:setup-time :teardown-time]))}
    m))
 
-(defn- base-booking [date-str tz]
-  (let [minutes (* (rand-int (* 24 12)) 5)
-        duration (-> 30 rand-int (* 5) (+ 30))]
-    {:start (time/random-time date-str minutes tz)
-     :title (event/random-event)
-     :end (time/random-time date-str (+ minutes duration) tz)}))
-
-(defn- assoc-for-room [room-id {:keys [start end] :as m} attendees]
-  (let [{:keys [setup-time teardown-time]} (id->room room-id)]
-    (assoc m
-           :id room-id
-           :start-setup (time/-min start setup-time)
-           :setup? (pos? setup-time)
-           :end-teardown (time/+min end teardown-time)
-           :attendees attendees
-           :teardown? (pos? teardown-time))))
-
 (defn- assoc-conj [m k v]
   (update m k conj v))
 
 (defn- conj-single-booking [date-str tz]
   (fn [m [room-id attendees]]
-    (let [base (base-booking date-str tz)]
-      (assoc-conj m room-id (assoc-for-room room-id base attendees)))))
+    (let [minutes (* (rand-int (* 24 12)) 5)
+          duration (-> 30 rand-int (* 5) (+ 30))
+          start (time/random-time date-str minutes tz)
+          end (time/random-time date-str (+ minutes duration) tz)
+          {:keys [setup-time teardown-time]} (id->room room-id)]
+      (assoc-conj m room-id
+                  {:start start
+                   :title (event/random-event)
+                   :end end
+                   :id room-id
+                   :start-setup (time/-min start setup-time)
+                   :setup? (pos? setup-time)
+                   :end-teardown (time/+min end teardown-time)
+                   :attendees attendees
+                   :teardown? (pos? teardown-time)}))))
 
 (defn- conj-random-booking [m date-str tz]
   (reduce
@@ -81,7 +77,7 @@
 
 (defn insert-booking [{:keys [tz week-start]}
                       service-info t1 t2
-                      title details
+                      title _details
                       repeat-info])
 
 (defn get-bookings-db

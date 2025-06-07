@@ -210,9 +210,10 @@ absolute invisible z-10 p-2 bg-white border"}]
                           :hx-target "#modal"
                           :hx-trigger "load"}]}
       (let [fields (builder/fields resource-id)
-            data (as-> (get-in session [:locked? room-id-service :resources resource-id :details]) $
-                       (remove empty? $)
-                       (concat $ [{:last? true}]))
+            data (get-in
+                  session
+                  [:locked? room-id-service :resources resource-id :details]
+                  [{:last? true}])
             data-count (count data)
             hx-vals (mk room-id-service resource-id description data-count)]
         (when-update

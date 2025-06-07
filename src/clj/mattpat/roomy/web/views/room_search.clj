@@ -119,7 +119,7 @@
 (defn scale-top [t]
   (->> t (* 100/60) double inc (format "%.3fpx")))
 
-(defn cross-booking-line [start-date tz room-id locked?]
+(defn cross-booking-line [start-date room-id other-bookings]
   [:div {:class ""
          :id (str "cb-" (.replace start-date "/" "-") "-" room-id)}
    (map
@@ -128,77 +128,84 @@
              :style {:top (scale-top minutes)
                      :width col-width-style
                      :height (scale-time duration)}}])
-    (room/other-bookings locked? room-id start-date tz))])
+    other-bookings)])
 
 [:div {:class "border h-[100px] border-black border-b-red-500 border-b-2"}]
 [:div {:class "h-[25px] text-xs text-gray-300 border-t cursor-pointer
 bg-slate-50"}]
 (defn- booking-line [start-date tz {:keys [id description]} locked?]
-  [:div {:class "flex flex-col relative overflow-hidden"
-         :style {:width col-width-style}}
-   ;; grid
-   (map
-    (fn [hour]
-      [:div {:class "border h-[100px]"}
-       (map
-        (fn [subhour]
-          (let [user? (.startsWith id "user")
-                past? (time/past? start-date hour (* subhour 15) tz)
-                past-next? (time/past-next? start-date hour (* subhour 15) tz 15)
-                past-previous? (time/past-next? start-date hour (* subhour 15) tz -15)]
-            [:div {:class (cond-> "h-[25px] text-xs text-gray-300"
-                                  (or past? user?) (str " bg-slate-50")
-                                  (not (or past? user?)) (str " cursor-pointer")
-                                  (and past? (not past-next?)) (str " border-b-red-500 border-b-2")
-                                  (and (pos? subhour) (or past? (not past-previous?))) (str " border-t"))
-                   :title (if past? "Past time" "Click to book")
-                   :hx-get (when-not (or past? user?) "booking-modal")
-                   :si-set [:room-id :start-date :tab-index]
-                   :si-set-class "booking-info"
-                   :si-clear [:hour :minute :hour2 :minute2]
-                   :hx-vals {:room-id id
-                             :tab-index 0
-                             :start-date start-date
-                             :hour hour
-                             :minute (* subhour 15)}
-                   :hx-target "#modal"}
-             (* subhour 15)]))
-        (range 4))])
-    (range 24))
-   ;; cross bookings
-   (cross-booking-line start-date tz id locked?)
-    ;; existing bookings
-   (map
-    (fn [booking]
-      (let [[minutes duration] (time/booking-offset booking start-date tz)
-            [start end] (time/format-booking booking start-date tz)
+  (let [other-bookings (room/other-bookings locked? id start-date tz)
+        our-bookings (room/get-bookings-db start-date tz locked? id)
+        endings (->> our-bookings
+                     (map #(time/teardown-offset % start-date tz locked?))
+                     (concat other-bookings)
+                     (map (fn [[start duration]] (+ start duration))))]
+    [:div {:class "flex flex-col relative overflow-hidden"
+           :style {:width col-width-style}}
+     ;; grid
+     (map
+      (fn [hour]
+        [:div {:class "border h-[100px]"}
+         (map
+          (fn [subhour]
+            (let [user? (.startsWith id "user")
+                  past? (time/past? start-date hour (* subhour 15) tz)
+                  past-next? (time/past-next? start-date hour (* subhour 15) tz 15)
+                  past-previous? (time/past-next? start-date hour (* subhour 15) tz -15)
+                  tval (+ (* 60 hour) (* 15 subhour))
+                  intermediate (some #(when (< tval % (+ tval 15)) (mod % 60)) endings)]
+              [:div {:class (cond-> "h-[25px] text-xs text-gray-300"
+                              (or past? user?) (str " bg-slate-50")
+                              (not (or past? user?)) (str " cursor-pointer")
+                              (and past? (not past-next?)) (str " border-b-red-500 border-b-2")
+                              (and (pos? subhour) (or past? (not past-previous?))) (str " border-t"))
+                     :title (if past? "Past time" "Click to book")
+                     :hx-get (when-not (or past? user?) "booking-modal")
+                     :si-set [:room-id :start-date :tab-index]
+                     :si-set-class "booking-info"
+                     :si-clear [:hour :minute :hour2 :minute2]
+                     :hx-vals {:room-id id
+                               :tab-index 0
+                               :start-date start-date
+                               :hour hour
+                               :minute (or intermediate (* subhour 15))}
+                     :hx-target "#modal"}
+               (* subhour 15)]))
+          (range 4))])
+      (range 24))
+     ;; cross bookings
+     (cross-booking-line start-date id other-bookings)
+     ;; existing bookings
+     (map
+      (fn [booking]
+        (let [[minutes duration] (time/booking-offset booking start-date tz)
+              [start end] (time/format-booking booking start-date tz)
 
-            [setup-minutes setup-duration] (time/setup-offset booking start-date tz locked?)
-            [teardown-minutes teardown-duration] (time/teardown-offset booking start-date tz locked?)
-            attendees-disp (->> booking :attendees (map room/id->user-disp) (string/join ", "))]
-        (list
-         (when (pos? setup-duration)
-               [:div {:class "bg-kkr-purple absolute text-sm text-white opacity-50"
-                      :style {:top (scale-top setup-minutes)
-                              :height (scale-time setup-duration)
-                              :width col-width-style}
-                      :title "Setup"}])
-         [:div {:class "bg-kkr-purple absolute text-sm text-white border-b border-b-kkr-purple"
-                :style {:top (scale-top minutes)
-                        :height (scale-time duration)
-                        :width col-width-style}
-                :title attendees-disp}
-          [:div (:title booking)]
-          [:div start " to"]
-          [:div end]]
-         (when (pos? teardown-duration)
-               [:div {:class "bg-kkr-purple absolute text-sm text-white opacity-50"
-                      :style {:top (scale-top teardown-minutes)
-                              :height (scale-time teardown-duration)
-                              :width col-width-style}
-                      :title "Teardown"}]))))
-    (room/get-bookings-db start-date tz locked? id))
-   ])
+              [setup-minutes setup-duration] (time/setup-offset booking start-date tz locked?)
+              [teardown-minutes teardown-duration] (time/teardown-offset booking start-date tz locked?)
+              attendees-disp (->> booking :attendees (map room/id->user-disp) (string/join ", "))]
+          (list
+           (when (pos? setup-duration)
+             [:div {:class "bg-kkr-purple absolute text-sm text-white opacity-50"
+                    :style {:top (scale-top setup-minutes)
+                            :height (scale-time setup-duration)
+                            :width col-width-style}
+                    :title "Setup"}])
+           [:div {:class "bg-kkr-purple absolute text-sm text-white border-b border-b-kkr-purple"
+                  :style {:top (scale-top minutes)
+                          :height (scale-time duration)
+                          :width col-width-style}
+                  :title attendees-disp}
+            [:div (:title booking)]
+            [:div start " to"]
+            [:div end]]
+           (when (pos? teardown-duration)
+             [:div {:class "bg-kkr-purple absolute text-sm text-white opacity-50"
+                    :style {:top (scale-top teardown-minutes)
+                            :height (scale-time teardown-duration)
+                            :width col-width-style}
+                    :title "Teardown"}]))))
+      our-bookings)]))
 
 (defcomponent ^:endpoint room-book [req ^:edn results start-date]
   (let [tzs (-> (keep :tz results) (conj tz) distinct (->> (take 4)))]
