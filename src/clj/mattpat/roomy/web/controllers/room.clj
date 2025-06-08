@@ -1,6 +1,7 @@
 (ns mattpat.roomy.web.controllers.room
   (:require
     [mattpat.roomy.time :as time]
+    [mattpat.roomy.time.repeat :as repeat]
     [mattpat.roomy.util :as util]
     [mattpat.roomy.web.controllers.event :as event]
     [mattpat.roomy.web.controllers.room-static :as room-static]))
@@ -28,7 +29,7 @@
 (defn- assoc-conj [m k v]
   (update m k conj v))
 
-(defn- conj-single-booking [date-str tz]
+(defn- conj-random-booking [date-str tz]
   (fn [m [room-id attendees]]
     (let [minutes (* (rand-int (* 24 12)) 5)
           duration (-> 30 rand-int (* 5) (+ 30))
@@ -46,9 +47,24 @@
                    :attendees attendees
                    :teardown? (pos? teardown-time)}))))
 
-(defn- conj-random-booking [m date-str tz]
+(defn- conj-single-booking [m room-id t1 t2 title repeat]
+  (assoc-conj m room-id
+              {:start t1
+               :title title
+               :end t2
+               :id room-id
+               :start-setup t1
+               :setup? false
+               :end-teardown t2
+               :attendees []
+               :teardown? false
+               :repeat repeat}))
+
+(def bookings (atom {}))
+
+(defn- conj-random-bookings [m date-str tz]
   (reduce
-   (conj-single-booking date-str tz)
+   (conj-random-booking date-str tz)
    m
    (room-static/random-allocation)))
 
@@ -73,26 +89,39 @@
          (map assoc-room-services)
          (map #(util/rename % :subject :title)))))
 
-(def bookings (atom {}))
-
 (defn insert-booking [{:keys [tz week-start]}
                       service-info t1 t2
                       title _details
-                      repeat-info])
+                      repeat-info]
+  (swap! bookings
+         #(reduce
+           (fn [m room-id]
+             (conj-single-booking m room-id t1 t2 title repeat))
+           %
+           (keys service-info))))
 
 (defn get-bookings-db
   ([date-str tz locked? room-id] (get-bookings-db date-str tz locked? room-id 0))
   ([date-str tz locked? room-id i]
-   (or
-    (->> (get @bookings room-id)
-         (filter (time/filter-day date-str tz locked?))
-         (map (room-services-assocer room-id))
-         (sort-by :start)
-         not-empty)
-    (do
-      (assert (zero? i) (prn date-str tz locked? room-id))
-      (swap! bookings conj-random-booking date-str tz)
-      (recur date-str tz locked? room-id 1)))))
+   (let [before-f (time/filter-before-bookings date-str tz locked?)
+         drop-f (time/filter-drop-bookings date-str tz locked?)]
+     (or
+      (->> room-id
+           (get @bookings)
+           (filter before-f)
+           (mapcat
+            (fn [event]
+              (->> event
+                   repeat/generate
+                   (drop-while drop-f)
+                   (take-while before-f))))
+           (map (room-services-assocer room-id))
+           (sort-by :start)
+           not-empty)
+      (do
+        (assert (zero? i) (prn date-str tz locked? room-id))
+        (swap! bookings conj-random-bookings date-str tz)
+        (recur date-str tz locked? room-id 1))))))
 
 (defn get-bookingss [date-str tz locked? companies]
   (mapcat #(get-bookings-db date-str tz locked? %) companies))

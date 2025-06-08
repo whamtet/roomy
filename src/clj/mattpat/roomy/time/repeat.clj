@@ -1,7 +1,7 @@
 (ns mattpat.roomy.time.repeat
   (:require
     [java-time.api :as jt]
-    [mattpat.roomy.time :refer [+day +month ->local-date]])
+    [mattpat.roomy.time :refer [+day +month ->local-date date-diff]])
   (:import
     java.time.LocalDate))
 
@@ -77,3 +77,14 @@
       "date" (let [end-date (->local-date end-date)]
                (take-while #(jt/<= % end-date) s))
       (take limit-type s))))
+
+(defn generate [{:keys [start end repeat] :as event}]
+  (if repeat
+    (for [s (repeat-dates start repeat)]
+      (let [e (+day end (date-diff start s))]
+        (assoc event
+               :start s
+               :start-setup s
+               :end e
+               :end-teardown e)))
+    [event]))

@@ -86,7 +86,7 @@
       (+min offset)
       (jt/< (jt/zoned-date-time))))
 
-(defn- date-diff [t1 t2]
+(defn date-diff [t1 t2]
   (.getDays
     (jt/period (jt/local-date t1) (jt/local-date t2))))
 
@@ -105,10 +105,24 @@
 (defn- postbuffer [{:keys [id end-teardown]} locked?]
   (+min end-teardown (get-in locked? [id :setup-time] 0)))
 
+#_
 (defn filter-day [date-str tz locked?]
   (let [start (jt/zoned-date-time (->local-date-time date-str) tz)
         end (+day start 1)]
     #(and (jt/< start (postbuffer % locked?)) (jt/< (prebuffer % locked?) end))))
+
+(defn filter-before-bookings [date-str tz locked?]
+  (let [end (-> date-str
+                ->local-date-time
+                (jt/zoned-date-time tz)
+                (+day 1))]
+    #(jt/< (prebuffer % locked?) end)))
+
+(defn filter-drop-bookings [date-str tz locked?]
+  (let [start (-> date-str
+                  ->local-date-time
+                  (jt/zoned-date-time tz))]
+    #(jt/<= (postbuffer % locked?) start)))
 
 (defn filter-before [date-str hour minute tz]
   (let [t (jt/zoned-date-time (->local-date-time date-str hour minute) tz)]
