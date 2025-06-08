@@ -96,7 +96,7 @@
   (swap! bookings
          #(reduce
            (fn [m room-id]
-             (conj-single-booking m room-id t1 t2 title repeat))
+             (conj-single-booking m room-id t1 t2 title repeat-info))
            %
            (keys service-info))))
 
@@ -118,24 +118,38 @@
            (map (room-services-assocer room-id))
            (sort-by :start)
            not-empty)
+      #_
       (do
         (assert (zero? i) (prn date-str tz locked? room-id))
         (swap! bookings conj-random-bookings date-str tz)
         (recur date-str tz locked? room-id 1))))))
 
-(defn get-bookingss [date-str tz locked? companies]
+(defn- get-bookingss [date-str tz locked? companies]
   (mapcat #(get-bookings-db date-str tz locked? %) companies))
 
-(defn- get-bookings-all [companies]
-  (mapcat @bookings companies))
+(defn- get-bookings-all* [date-str tz locked? room-id]
+  (let [before-f (time/filter-before-bookings date-str tz locked?)]
+    (->> room-id
+         (get @bookings)
+         (mapcat
+          (fn [event]
+            (if (before-f event)
+              (->> event
+                   repeat/generate
+                   (take-while before-f))
+              [event])))
+         (map (room-services-assocer room-id)))))
+
+(defn- get-bookings-all [date-str tz locked? room-ids]
+  (mapcat #(get-bookings-all* date-str tz locked? %) room-ids))
 
 (defn booking-limits [locked? room-id start-date hour minute tz]
   (let [bookings (->> locked? keys (get-bookingss start-date tz locked?))]
-    [(time/latest-start start-date hour minute tz bookings locked?)
+    [(time/latest-xstart start-date hour minute tz bookings locked?)
      (time/earliest-beginning start-date hour minute tz bookings locked?)]))
 
 (defn booking-limits-multiday [locked? room-id start-date hour minute tz]
-  (let [bookings (->> locked? keys get-bookings-all)]
+  (let [bookings (->> locked? keys (get-bookings-all start-date tz locked?))]
     [(time/latest-start-multiday start-date hour minute tz bookings locked?)
      (time/earliest-beginning-multiday start-date hour minute tz bookings locked?)]))
 

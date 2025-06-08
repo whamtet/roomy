@@ -26,7 +26,7 @@
              "Saturday" 5
              "Sunday" 6})
 
-(defmulti repeat* :repeat-type)
+(defmulti repeat* (fn [_ repeat] (:repeat-type repeat)))
 
 (defmethod repeat* "daily" [start {:keys [interval]}]
   (iterate #(+day % interval) start))
@@ -81,10 +81,12 @@
 (defn generate [{:keys [start end repeat] :as event}]
   (if repeat
     (for [s (repeat-dates start repeat)]
-      (let [e (+day end (date-diff start s))]
+      (let [date-diff (date-diff start s)
+            e (+day end date-diff)]
         (assoc event
                :start s
                :start-setup s
                :end e
-               :end-teardown e)))
+               :end-teardown e
+               :repeat-instance? (pos? date-diff))))
     [event]))

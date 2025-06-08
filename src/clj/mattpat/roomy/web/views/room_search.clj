@@ -177,7 +177,7 @@ bg-slate-50"}]
      (cross-booking-line start-date id other-bookings)
      ;; existing bookings
      (map
-      (fn [booking]
+      (fn [{:keys [title repeat-instance?] :as booking}]
         (let [[minutes duration] (time/booking-offset booking start-date tz)
               [start end] (time/format-booking booking start-date tz)
 
@@ -196,7 +196,7 @@ bg-slate-50"}]
                           :height (scale-time duration)
                           :width col-width-style}
                   :title attendees-disp}
-            [:div (:title booking)]
+            [:div title (when repeat-instance? " (Repeat)")]
             [:div start " to"]
             [:div end]]
            (when (pos? teardown-duration)

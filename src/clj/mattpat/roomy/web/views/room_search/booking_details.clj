@@ -39,7 +39,7 @@
                                      interval
                                      :limit-type (parse-limit-type limit-type)
                                      end-date days date-pattern))
-          nil #_(user/finish-booking req))))
+          (user/finish-booking req))))
 
 (defcomponent ^:endpoint booking-details [req
                                           ^:long tab-index
