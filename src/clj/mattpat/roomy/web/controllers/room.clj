@@ -48,7 +48,7 @@
 
 (defn- make-booking [t1 t2 title repeat]
   (cond-> {:start t1
-           :title title
+           :title (event/random-event) ;; TODO - change
            :end t2
            :start-setup t1
            :setup? false
@@ -165,8 +165,7 @@
                  repeat/generate
                  (drop-while drop-f)
                  (take-while before-f))))
-         remove-repeats-shared
-         (group-by #(-> % :start-setup .getDayOfMonth)))))
+         remove-repeats-shared)))
 
 (defn- get-bookingss [date-str tz locked? companies]
   (mapcat #(get-bookings-db date-str tz locked? %) companies))

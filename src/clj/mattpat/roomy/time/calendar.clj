@@ -12,7 +12,7 @@
   (jt/minus a (jt/days b)))
 
 (defn calendar-range [year month week-start]
-  (let [start (jt/local-date-time year month 1)
+  (let [start (jt/local-date year month 1)
         offset (if (= "Sunday" week-start) 0 -1)]
     (->> start
          jt/day-of-week
@@ -21,6 +21,16 @@
          (-day start)
          (iterate inc-day)
          (take 42))))
+
+(defn event->date [{:keys [start-setup]} tz]
+  (-> start-setup
+      (jt/with-zone-same-instant tz)
+      jt/local-date))
+
+(defn event->disp [start tz]
+  (-> start
+      (jt/with-zone-same-instant tz)
+      (->> (jt/format "HH:mm"))))
 
 (defn today? [d tz]
   (-> (jt/zoned-date-time)
