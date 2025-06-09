@@ -293,6 +293,11 @@
   (when (not-empty s)
         (reverse (fuse-overlaps* s))))
 
+(defn overlap? [{:keys [start-setup end-teardown]} t2]
+  (and
+   (jt/< start-setup (:end-teardown t2))
+   (jt/< (:start-setup t2) end-teardown)))
+
 (defn- subtract-booking
   "cut our booking out of their booking"
   [[their-start their-end] [our-start our-end]]

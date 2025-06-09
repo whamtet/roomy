@@ -48,17 +48,18 @@
                    :teardown? (pos? teardown-time)}))))
 
 (defn- conj-single-booking [m room-id t1 t2 title repeat]
-  (assoc-conj m room-id
-              {:start t1
-               :title title
-               :end t2
-               :id room-id
-               :start-setup t1
-               :setup? false
-               :end-teardown t2
-               :attendees []
-               :teardown? false
-               :repeat repeat}))
+  (->>
+   (cond-> {:start t1
+            :title title
+            :end t2
+            :id room-id
+            :start-setup t1
+            :setup? false
+            :end-teardown t2
+            :attendees []
+            :teardown? false}
+     (:repeat-type repeat) (assoc :repeat repeat))
+   (assoc-conj m room-id)))
 
 (def bookings (atom {}))
 
@@ -100,6 +101,20 @@
            %
            (keys service-info))))
 
+(defn- remove-repeats
+  "The UI prevents clashing bookings, but repeats can still clash"
+  [events]
+  (loop [[event & todo] events
+         to-check (set events)
+         done ()]
+    (if event
+      (if (:repeat-instance? event)
+        (if (some #(time/overlap? % event) to-check)
+          (recur todo (disj to-check event) done)
+          (recur todo to-check (conj done event)))
+        (recur todo to-check (conj done event)))
+      done)))
+
 (defn get-bookings-db
   ([date-str tz locked? room-id] (get-bookings-db date-str tz locked? room-id 0))
   ([date-str tz locked? room-id i]
@@ -115,6 +130,7 @@
                    repeat/generate
                    (drop-while drop-f)
                    (take-while before-f))))
+           remove-repeats
            (map (room-services-assocer room-id))
            (sort-by :start)
            not-empty)
@@ -145,7 +161,7 @@
 
 (defn booking-limits [locked? room-id start-date hour minute tz]
   (let [bookings (->> locked? keys (get-bookingss start-date tz locked?))]
-    [(time/latest-xstart start-date hour minute tz bookings locked?)
+    [(time/latest-start start-date hour minute tz bookings locked?)
      (time/earliest-beginning start-date hour minute tz bookings locked?)]))
 
 (defn booking-limits-multiday [locked? room-id start-date hour minute tz]
