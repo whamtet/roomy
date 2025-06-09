@@ -3,6 +3,7 @@
       [clojure.java.io :as io]
       [mattpat.roomy.time.calendar :as calendar]
       [mattpat.roomy.util :as util :refer [defm-dev]]
+      [mattpat.roomy.web.controllers.room :as room]
       [mattpat.roomy.web.views.icons :as icons]))
 
 (defm-dev fragments []
@@ -69,7 +70,7 @@
 [:div {:class "bg-white"}]
 [:div {:class "bg-gray-50 text-gray-500"}]
 [:div {:class "flex h-6 w-6 items-center justify-center rounded-full bg-indigo-600 font-semibold text-white"}]
-(defn- d1 [year month d tz]
+(defn- d-desktop [year month d tz]
   [:div {:class (util/cond-class "relative py-2 px-3"
                                  (calendar/this-month? year month d) "bg-white" "bg-gray-50 text-gray-500")}
    [:time {:class (when (calendar/today? d tz) "flex h-6 w-6 items-center justify-center rounded-full bg-indigo-600 font-semibold text-white")
@@ -80,7 +81,7 @@
 [:div {:class "font-semibold text-indigo-600"}]
 [:div {:class "text-gray-900"}]
 [:div {:class "text-gray-500"}]
-(defn- d2 [year month d tz]
+(defn- d-mobile [year month d tz]
   (let [this-month? (calendar/this-month? year month d)
         today? (calendar/today? d tz)]
     [:button {:class (util/cond-class "flex h-14 flex-col py-2 px-3 hover:bg-gray-100 focus:z-10"
@@ -99,10 +100,13 @@
    (let [range (calendar/calendar-range year month week-start)
          days (if (= "Sunday" week-start)
                 ["Sun" "Mon" "Tue" "Wed" "Thu" "Fri" "Sat"]
-                ["Mon" "Tue" "Wed" "Thu" "Fri" "Sat" "Sun"])]
+                ["Mon" "Tue" "Wed" "Thu" "Fri" "Sat" "Sun"])
+         bookings (room/get-bookings-month year month tz)]
+     (prn 'bookings bookings)
+     ;; we interleave because we're mixing html with hiccup
      (util/interleave-all
       (fragments)
       [(navigator year month)
        (map header days)
-       (map #(d1 year month % tz) range)
-       (map #(d2 year month % tz) range)]))))
+       (map #(d-desktop year month % tz) range)
+       (map #(d-mobile year month % tz) range)]))))

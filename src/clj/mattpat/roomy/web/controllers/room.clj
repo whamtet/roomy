@@ -40,28 +40,25 @@
                   {:start start
                    :title (event/random-event)
                    :end end
-                   :id room-id
                    :start-setup (time/-min start setup-time)
                    :setup? (pos? setup-time)
                    :end-teardown (time/+min end teardown-time)
                    :attendees attendees
                    :teardown? (pos? teardown-time)}))))
 
-(defn- conj-single-booking [m room-id t1 t2 title repeat]
-  (->>
-   (cond-> {:start t1
-            :title title
-            :end t2
-            :id room-id
-            :start-setup t1
-            :setup? false
-            :end-teardown t2
-            :attendees []
-            :teardown? false}
-     (:repeat-type repeat) (assoc :repeat repeat))
-   (assoc-conj m room-id)))
+(defn- make-booking [t1 t2 title repeat]
+  (cond-> {:start t1
+           :title title
+           :end t2
+           :start-setup t1
+           :setup? false
+           :end-teardown t2
+           :attendees []
+           :teardown? false}
+    (:repeat-type repeat) (assoc :repeat repeat)))
 
 (def bookings (atom {}))
+(def bookings-self (atom nil))
 
 (defn- conj-random-bookings [m date-str tz]
   (reduce
@@ -94,12 +91,16 @@
                       service-info t1 t2
                       title _details
                       repeat-info]
-  (swap! bookings
-         #(reduce
-           (fn [m room-id]
-             (conj-single-booking m room-id t1 t2 title repeat-info))
-           %
-           (keys service-info))))
+  (let [booking (make-booking t1 t2 title repeat-info)
+        rooms (keys service-info)
+        booking-self (assoc booking :rooms (set rooms))]
+    (swap! bookings
+           #(reduce
+             (fn [m room-id]
+               (assoc-conj m room-id booking))
+             %
+             rooms))
+    (swap! bookings-self conj booking-self)))
 
 (defn- remove-repeats
   "The UI prevents clashing bookings, but repeats can still clash"
@@ -110,6 +111,20 @@
     (if event
       (if (:repeat-instance? event)
         (if (some #(time/overlap? % event) to-check)
+          (recur todo (disj to-check event) done)
+          (recur todo to-check (conj done event)))
+        (recur todo to-check (conj done event)))
+      done)))
+
+(defn- remove-repeats-shared
+  "The UI prevents clashing bookings, but repeats can still clash"
+  [events]
+  (loop [[event & todo] events
+         to-check (set events)
+         done ()]
+    (if event
+      (if (:repeat-instance? event)
+        (if (some #(time/overlap-shared? % event) to-check)
           (recur todo (disj to-check event) done)
           (recur todo to-check (conj done event)))
         (recur todo to-check (conj done event)))
@@ -134,11 +149,24 @@
            (map (room-services-assocer room-id))
            (sort-by :start)
            not-empty)
-      #_
       (do
         (assert (zero? i) (prn date-str tz locked? room-id))
         (swap! bookings conj-random-bookings date-str tz)
         (recur date-str tz locked? room-id 1))))))
+
+(defn get-bookings-month [year month tz]
+  (let [before-f (time/filter-before-month year month tz)
+        drop-f (time/filter-drop-month year month tz)]
+    (->> @bookings-self
+         (filter before-f)
+         (mapcat
+          (fn [event]
+            (->> event
+                 repeat/generate
+                 (drop-while drop-f)
+                 (take-while before-f))))
+         remove-repeats-shared
+         (group-by #(-> % :start-setup .getDayOfMonth)))))
 
 (defn- get-bookingss [date-str tz locked? companies]
   (mapcat #(get-bookings-db date-str tz locked? %) companies))

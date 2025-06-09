@@ -105,12 +105,6 @@
 (defn- postbuffer [{:keys [id end-teardown]} locked?]
   (+min end-teardown (get-in locked? [id :setup-time] 0)))
 
-#_
-(defn filter-day [date-str tz locked?]
-  (let [start (jt/zoned-date-time (->local-date-time date-str) tz)
-        end (+day start 1)]
-    #(and (jt/< start (postbuffer % locked?)) (jt/< (prebuffer % locked?) end))))
-
 (defn filter-before-bookings [date-str tz locked?]
   (let [end (-> date-str
                 ->local-date-time
@@ -118,11 +112,22 @@
                 (+day 1))]
     #(jt/< (prebuffer % locked?) end)))
 
+(defn filter-before-month [year month tz]
+  (let [end (-> (jt/local-date-time year month 1 0)
+                (jt/zoned-date-time tz)
+                (+month 1))]
+    #(jt/< (:start-setup %) end)))
+
 (defn filter-drop-bookings [date-str tz locked?]
   (let [start (-> date-str
                   ->local-date-time
                   (jt/zoned-date-time tz))]
     #(jt/<= (postbuffer % locked?) start)))
+
+(defn filter-drop-month [year month tz]
+  (let [start (-> (jt/local-date-time year month 1 0)
+                  (jt/zoned-date-time tz))]
+    #(jt/<= (:end-teardown %) start)))
 
 (defn filter-before [date-str hour minute tz]
   (let [t (jt/zoned-date-time (->local-date-time date-str hour minute) tz)]
@@ -297,6 +302,12 @@
   (and
    (jt/< start-setup (:end-teardown t2))
    (jt/< (:start-setup t2) end-teardown)))
+
+(defn overlap-shared? [{:keys [start-setup end-teardown rooms]} t2]
+  (and
+   (jt/< start-setup (:end-teardown t2))
+   (jt/< (:start-setup t2) end-teardown)
+   (some rooms (:rooms t2))))
 
 (defn- subtract-booking
   "cut our booking out of their booking"

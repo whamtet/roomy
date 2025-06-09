@@ -50,6 +50,7 @@
      icon])])
 
 (defn sidebar [current-url & body]
+  ;; we interleave because we're mixing html with hiccup
   (util/interleave-all
    (fragments)
    [(map #(sidebar-mobile current-url %) options)
