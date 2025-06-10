@@ -13,8 +13,5 @@ repltest:
 tests:
 	clj -M:test && tput bel
 
-uberjar:
-	pkill java && npm run tailwind && clj -T:build all && tput bel
-
 uberjarlight:
 	npm run tailwind && clj -T:build all && tput bel
