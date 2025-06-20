@@ -48,7 +48,9 @@
 
 (def id->room (util/key-by :id rooms))
 (def id->user (util/key-by :id users))
-(def room-ids (keys id->room))
+(def num-room-ids (-> id->room count (* 0.5) long))
+(def room-ids (->> id->room keys shuffle (take num-room-ids)))
+(def random-room? (set room-ids))
 
 (defn random-allocation
   "map of room-ids to list of user-ids"

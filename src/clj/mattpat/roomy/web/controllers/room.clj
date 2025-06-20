@@ -149,7 +149,7 @@
            (map (room-services-assocer room-id))
            (sort-by :start)
            not-empty)
-      (do
+      (when (room-static/random-room? room-id)
         (assert (zero? i) (prn date-str tz locked? room-id))
         (swap! bookings conj-random-bookings date-str tz)
         (recur date-str tz locked? room-id 1))))))
