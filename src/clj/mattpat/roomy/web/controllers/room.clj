@@ -196,7 +196,9 @@
     [(time/latest-start-multiday start-date hour minute tz bookings locked?)
      (time/earliest-beginning-multiday start-date hour minute tz bookings locked?)]))
 
-(defn other-bookings [locked? room-id start-date tz]
+(defn other-bookings
+  "we need to take our bookings out of the other bookings"
+  [locked? room-id start-date tz]
   (->> (dissoc locked? room-id)
        keys
        (get-bookingss start-date tz locked?)

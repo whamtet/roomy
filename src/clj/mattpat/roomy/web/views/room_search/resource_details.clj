@@ -153,7 +153,7 @@ absolute invisible z-10 p-2 bg-white border"}]
       [:div
        (->> fields
             (map #(assoc-mk % :inline true room-id-service resource-id))
-            (map-pairs #(render-field-half %1 %2 data)
+            (map-pairs #(render-field-half 0 %1 %2 data)
                        #(render-field-full % data)))])))
 
 (defn- accordion-pair [i fields data hx-vals]
